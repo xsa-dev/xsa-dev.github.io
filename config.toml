@@ -40,7 +40,7 @@ lang = "ru"
 loading = "lazy"
 
 [extra.analytics.umami]
-enabled = false
+enabled = true
 script_url = "https://cloud.umami.is/script.js"
-website_id = ""
+website_id = "d5af6472-d4f2-4a7a-9f67-98c29e760009"
 domains = "xsa-dev.github.io"
