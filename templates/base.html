@@ -3,23 +3,82 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  {# Primary SEO #}
   <title>{% block title %}{{ config.title }}{% endblock title %}</title>
+  <meta name="title" content="{% block seo_title %}{{ config.title }}{% endblock seo_title %}">
   <meta name="description" content="{% block description %}{{ config.description }}{% endblock description %}">
+  <meta name="author" content="{{ config.extra.author | default(value=config.title) }}">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <link rel="canonical" href="{% block canonical %}{{ config.base_url | safe }}{% endblock canonical %}">
+  
+  {# Open Graph / Facebook #}
+  <meta property="og:type" content="{% block og_type %}website{% endblock og_type %}">
+  <meta property="og:site_name" content="{{ config.title }}">
+  <meta property="og:title" content="{% block og_title %}{{ config.title }}{% endblock og_title %}">
+  <meta property="og:description" content="{% block og_description %}{{ config.description }}{% endblock og_description %}">
+  <meta property="og:url" content="{% block og_url %}{{ config.base_url | safe }}{% endblock og_url %}">
+  <meta property="og:locale" content="{{ config.extra.locale | default(value='ru_RU') }}">
+
+  {# Twitter Cards #}
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{% block twitter_title %}{{ config.title }}{% endblock twitter_title %}">
+  <meta name="twitter:description" content="{% block twitter_description %}{{ config.description }}{% endblock twitter_description %}">
+  {% if config.extra.twitter %}
+  <meta name="twitter:creator" content="{{ config.extra.twitter }}">
+  <meta name="twitter:site" content="{{ config.extra.twitter }}">
+  {% endif %}
+
+  {# Structured Data (JSON-LD) #}
+  {% block json_ld %}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "{{ config.title }}",
+    "url": "{{ config.base_url | safe }}",
+    "description": "{{ config.description }}",
+    "author": {
+      "@type": "Person",
+      "name": "{{ config.extra.author }}"
+    }
+  }
+  </script>
+  {% endblock json_ld %}
+
+  {# Styles & Feeds #}
   <link rel="stylesheet" href="/style.css">
   {% if config.generate_feeds %}
   <link rel="alternate" type="application/atom+xml" title="Atom Feed" href="/atom.xml">
   <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="/rss.xml">
+  {% endif %}
+
+  {% if config.build_search_index %}
+  <script defer src="/elasticlunr.min.js"></script>
+  <script defer src="/search_index.{{ config.default_language }}.js"></script>
+  <script defer src="/search.js"></script>
   {% endif %}
 </head>
 <body>
   <div class="container">
     <header class="site-header">
       <a href="/" class="site-title">{{ config.title }}</a>
-      <nav class="site-nav">
-        <a href="/posts/">Статьи</a>
-        <a href="/tags/">Теги</a>
-        <a href="/about/">Обо мне</a>
-      </nav>
+      <div class="header-actions">
+        <nav class="site-nav">
+          <a href="/posts/">Статьи</a>
+          <a href="/tags/">Теги</a>
+          <a href="/about/">Обо мне</a>
+        </nav>
+        {% if config.build_search_index %}
+        <button id="search-open-btn" class="search-btn" aria-label="Поиск по сайту" title="Поиск (Ctrl+K)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <span class="search-key-hint">⌘K</span>
+        </button>
+        {% endif %}
+      </div>
     </header>
 
     <main>
@@ -41,5 +100,27 @@
       </div>
     </footer>
   </div>
+
+  {% if config.build_search_index %}
+  {# Search Modal #}
+  <div id="search-modal" class="search-modal hidden" role="dialog" aria-modal="true" aria-label="Поиск по сайту">
+    <div class="search-dialog">
+      <div class="search-input-wrapper">
+        <svg class="search-input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input id="search-input" type="search" placeholder="Поиск по статьям и тегам..." autocomplete="off" spellcheck="false">
+        <button id="search-close-btn" class="search-close-btn" aria-label="Закрыть поиск">✕</button>
+      </div>
+      <ul id="search-results" class="search-results-list"></ul>
+      <div class="search-footer-hint">
+        <span><kbd>↑</kbd> <kbd>↓</kbd> навигация</span>
+        <span><kbd>↵</kbd> открыть</span>
+        <span><kbd>ESC</kbd> закрыть</span>
+      </div>
+    </div>
+  </div>
+  {% endif %}
 </body>
 </html>

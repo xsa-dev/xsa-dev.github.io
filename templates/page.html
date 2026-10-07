@@ -1,7 +1,41 @@
 {% extends "base.html" %}
 
 {% block title %}{{ page.title }} | {{ config.title }}{% endblock title %}
+{% block seo_title %}{{ page.title }} | {{ config.title }}{% endblock seo_title %}
 {% block description %}{{ page.description | default(value=config.description) }}{% endblock description %}
+{% block canonical %}{{ page.permalink | safe }}{% endblock canonical %}
+{% block og_type %}article{% endblock og_type %}
+{% block og_title %}{{ page.title }}{% endblock og_title %}
+{% block og_description %}{{ page.description | default(value=config.description) }}{% endblock og_description %}
+{% block og_url %}{{ page.permalink | safe }}{% endblock og_url %}
+{% block twitter_title %}{{ page.title }}{% endblock twitter_title %}
+{% block twitter_description %}{{ page.description | default(value=config.description) }}{% endblock twitter_description %}
+
+{% block json_ld %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "{{ page.title }}",
+  "description": "{{ page.description | default(value=config.description) }}",
+  "url": "{{ page.permalink | safe }}",
+  {% if page.date %}"datePublished": "{{ page.date }}",{% endif %}
+  {% if page.updated %}"dateModified": "{{ page.updated }}",{% elif page.date %}"dateModified": "{{ page.date }}",{% endif %}
+  "author": {
+    "@type": "Person",
+    "name": "{{ config.extra.author }}"
+  },
+  "publisher": {
+    "@type": "Person",
+    "name": "{{ config.extra.author }}"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "{{ page.permalink | safe }}"
+  }
+}
+</script>
+{% endblock json_ld %}
 
 {% block content %}
 <article>
@@ -48,6 +82,29 @@
       {% endif %}
     </div>
   </nav>
+  {% endif %}
+
+  {% if config.extra.giscus and config.extra.giscus.enabled %}
+  <section class="comments-section" style="margin-top: 3.5rem; padding-top: 2rem; border-top: 1px solid var(--border-color);">
+    <h2 style="font-size: 1.25rem; margin-bottom: 1.5rem;">Комментарии</h2>
+    <div class="giscus"></div>
+    <script src="https://giscus.app/client.js"
+            data-repo="{{ config.extra.giscus.repo }}"
+            data-repo-id="{{ config.extra.giscus.repo_id | default(value='') }}"
+            data-category="{{ config.extra.giscus.category }}"
+            data-category-id="{{ config.extra.giscus.category_id | default(value='') }}"
+            data-mapping="{{ config.extra.giscus.mapping | default(value='pathname') }}"
+            data-strict="0"
+            data-reactions-enabled="{{ config.extra.giscus.reactions_enabled | default(value='1') }}"
+            data-emit-metadata="0"
+            data-input-position="{{ config.extra.giscus.input_position | default(value='bottom') }}"
+            data-theme="{{ config.extra.giscus.theme | default(value='preferred_color_scheme') }}"
+            data-lang="{{ config.extra.giscus.lang | default(value='ru') }}"
+            data-loading="{{ config.extra.giscus.loading | default(value='lazy') }}"
+            crossorigin="anonymous"
+            async>
+    </script>
+  </section>
   {% endif %}
 </article>
 {% endblock content %}

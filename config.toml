@@ -1,9 +1,9 @@
-base_url = "https://example.com"
+base_url = "https://xsa-dev.github.io"
 title = "Notes & Insights"
-description = "Blog about software engineering, AI, algorithms, and systems."
+description = "Блог об архитектуре систем, AI-агентах, распределенных системах и алгоритмическом трейдинге."
 default_language = "ru"
 
-build_search_index = false
+build_search_index = true
 generate_feeds = true
 feed_filenames = ["atom.xml", "rss.xml"]
 
@@ -18,7 +18,21 @@ render_emoji = true
 theme = "ayu-dark"
 
 [extra]
-author = "Alexei"
+author = "Alexei Savin"
 subtitle = "Инженерия, алгоритмы, AI и архитектура"
-github = "https://github.com"
-telegram = "https://t.me"
+site_url = "https://xsa-dev.github.io"
+github = "https://github.com/xsa-dev"
+telegram = "https://t.me/AlphaPipeline"
+twitter = "https://x.com/alxy_dev"
+locale = "ru_RU"
+
+[extra.giscus]
+enabled = true
+repo = "xsa-dev/xsa-dev.github.io"
+category = "General"
+mapping = "pathname"
+reactions_enabled = "1"
+input_position = "bottom"
+theme = "preferred_color_scheme"
+lang = "ru"
+loading = "lazy"
