@@ -26,6 +26,10 @@ telegram = "https://t.me/AlphaPipeline"
 twitter = "https://x.com/alxy_dev"
 locale = "ru_RU"
 
+[extra.verification]
+google = ""
+yandex = ""
+
 [extra.giscus]
 enabled = true
 repo = "xsa-dev/xsa-dev.github.io"
@@ -44,3 +48,18 @@ enabled = true
 script_url = "https://cloud.umami.is/script.js"
 website_id = "d5af6472-d4f2-4a7a-9f67-98c29e760009"
 domains = "xsa-dev.github.io"
+
+[extra.analytics.google]
+enabled = false
+tag_id = ""
+
+[extra.analytics.yandex]
+enabled = false
+counter_id = ""
+webvisor = false
+clickmap = true
+tracklinks = true
+
+[extra.analytics.facebook]
+enabled = false
+pixel_id = ""
