@@ -28,7 +28,7 @@ locale = "ru_RU"
 
 [extra.verification]
 google = ""
-yandex = ""
+yandex = "32e94bd2030ab10f"
 
 [extra.giscus]
 enabled = true
