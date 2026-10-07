@@ -66,7 +66,8 @@ LLM не должна принимать решения по каждой све
 
 ---
 
-## Первоисточники и база знаний
+## Первоисточники и материалы
 
-* Исходные заметки и подробный разбор видеоматериалов хранятся в репозитории [Obsidian Vault: Self-Improving Trading Agent](https://github.com/xsa-dev/obsidian-vault/blob/main/YouTube/Self-improving-trading-agent-Hermes-2026-06-21.md).
-* Кодовая база исследований алгоритмических стратегий доступна в репозиториях [xsa-dev](https://github.com/xsa-dev).
+* **Оригинальное видео:** [01 Systems (Wacko Alpha) — Self-Improving Trading Agent on YouTube](https://youtu.be/6njREUQAFdg)
+* **Заметки и детальный конспект:** [Obsidian Vault: Self-Improving Trading Agent (GitHub)](https://github.com/xsa-dev/obsidian-vault/blob/main/YouTube/Self-improving-trading-agent-Hermes-2026-06-21.md)
+* **Инженерные наработки и репозитории:** [github.com/xsa-dev](https://github.com/xsa-dev)
