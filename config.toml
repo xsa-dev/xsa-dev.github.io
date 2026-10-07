@@ -24,9 +24,8 @@ github_alerts = true
 render_emoji = true
 
 [markdown.highlighting]
-light_theme = "solarized-light"
-dark_theme = "solarized-dark"
-style = "class"
+theme = "ayu-dark"
+style = "inline"
 
 [search]
 index_format = "fuse_json"
@@ -43,8 +42,10 @@ show_copyright = true
 show_powered_by = false
 
 toc = true
+toc_sidebar = true
 toc_inline = true
 toc_ordered = false
+go_to_top = true
 
 separator = "•"
 title_separator = "-"
