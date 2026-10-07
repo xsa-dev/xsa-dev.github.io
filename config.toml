@@ -36,3 +36,9 @@ input_position = "bottom"
 theme = "preferred_color_scheme"
 lang = "ru"
 loading = "lazy"
+
+[extra.analytics.umami]
+enabled = false
+script_url = "https://cloud.umami.is/script.js"
+website_id = ""
+domains = "xsa-dev.github.io"

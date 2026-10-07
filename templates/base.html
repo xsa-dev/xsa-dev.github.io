@@ -58,6 +58,11 @@
   <script defer src="/search_index.{{ config.default_language }}.js"></script>
   <script defer src="/search.js"></script>
   {% endif %}
+
+  {# Umami Analytics #}
+  {% if config.extra.analytics and config.extra.analytics.umami and config.extra.analytics.umami.enabled and config.extra.analytics.umami.website_id %}
+  <script defer src="{{ config.extra.analytics.umami.script_url | default(value='https://cloud.umami.is/script.js') }}" data-website-id="{{ config.extra.analytics.umami.website_id }}" {% if config.extra.analytics.umami.domains %}data-domains="{{ config.extra.analytics.umami.domains }}"{% endif %}></script>
+  {% endif %}
 </head>
 <body>
   <div class="container">
