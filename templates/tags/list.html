@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}Теги | {{ config.title }}{% endblock title %}
+
+{% block content %}
+<header class="article-header">
+  <h1 class="article-title">Все теги</h1>
+</header>
+
+<div class="tags-cloud" style="display: flex; flex-wrap: wrap; gap: 0.75rem;">
+  {% for term in terms %}
+  <a class="tag-badge" style="font-size: 1rem; padding: 0.4rem 0.8rem;" href="{{ term.permalink | safe }}">
+    #{{ term.name }} ({{ term.pages | length }})
+  </a>
+  {% endfor %}
+</div>
+{% endblock content %}

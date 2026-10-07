@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="{{ config.default_language }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}{{ config.title }}{% endblock title %}</title>
+  <meta name="description" content="{% block description %}{{ config.description }}{% endblock description %}">
+  <link rel="stylesheet" href="{{ get_url(path='style.css') | safe }}">
+  {% if config.generate_feeds %}
+  <link rel="alternate" type="application/atom+xml" title="Atom Feed" href="{{ get_url(path='atom.xml') | safe }}">
+  <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="{{ get_url(path='rss.xml') | safe }}">
+  {% endif %}
+</head>
+<body>
+  <div class="container">
+    <header class="site-header">
+      <a href="{{ config.base_url | safe }}" class="site-title">{{ config.title }}</a>
+      <nav class="site-nav">
+        <a href="{{ get_url(path='posts') | safe }}">Статьи</a>
+        <a href="{{ get_url(path='tags') | safe }}">Теги</a>
+        <a href="{{ get_url(path='about') | safe }}">Обо мне</a>
+      </nav>
+    </header>
+
+    <main>
+      {% block content %}{% endblock content %}
+    </main>
+
+    <footer class="site-footer">
+      <div>© {{ now() | date(format="%Y") }} {{ config.extra.author | default(value=config.title) }}</div>
+      <div class="footer-links">
+        {% if config.extra.github %}
+        <a href="{{ config.extra.github }}" target="_blank" rel="noopener">GitHub</a>
+        {% endif %}
+        {% if config.extra.telegram %}
+        <a href="{{ config.extra.telegram }}" target="_blank" rel="noopener">Telegram</a>
+        {% endif %}
+        {% if config.generate_feeds %}
+        <a href="{{ get_url(path='atom.xml') | safe }}">RSS</a>
+        {% endif %}
+      </div>
+    </footer>
+  </div>
+</body>
+</html>

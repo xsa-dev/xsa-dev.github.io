@@ -1,0 +1,10 @@
+# Zola build directory
+public/
+
+# OS / Editor files
+.DS_Store
+*.swp
+*.swo
+*~
+.idea/
+.vscode/

@@ -1,0 +1,24 @@
+base_url = "https://example.com"
+title = "Notes & Insights"
+description = "Blog about software engineering, AI, algorithms, and systems."
+default_language = "ru"
+
+build_search_index = false
+generate_feeds = true
+feed_filenames = ["atom.xml", "rss.xml"]
+
+taxonomies = [
+    { name = "tags", feed = true }
+]
+
+[markdown]
+render_emoji = true
+
+[markdown.highlighting]
+theme = "ayu-dark"
+
+[extra]
+author = "Alexei"
+subtitle = "Инженерия, алгоритмы, AI и архитектура"
+github = "https://github.com"
+telegram = "https://t.me"

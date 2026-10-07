@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="hero" style="margin-bottom: 2.5rem;">
+  <h1>{{ config.title }}</h1>
+  {% if config.extra.subtitle %}
+  <p style="font-size: 1.15rem; color: var(--text-muted); margin-top: 0.25rem;">
+    {{ config.extra.subtitle }}
+  </p>
+  {% endif %}
+  <p>{{ section.content | safe }}</p>
+</section>
+
+<section>
+  <h2 style="font-size: 1.3rem; margin-bottom: 1.2rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted);">
+    Свежие публикации
+  </h2>
+
+  {% set posts_section = get_section(path="posts/_index.md") %}
+  <ul class="post-list">
+    {% for page in posts_section.pages %}
+    {% if loop.index0 < 5 %}
+    <li class="post-item">
+      <div class="post-meta">
+        <time datetime="{{ page.date }}">{{ page.date | date(format="%d.%m.%Y") }}</time>
+        <span>•</span>
+        <span>{{ page.reading_time }} мин чтения</span>
+      </div>
+      <h3 class="post-title">
+        <a href="{{ page.permalink | safe }}">{{ page.title }}</a>
+      </h3>
+      {% if page.description %}
+      <p class="post-summary">{{ page.description }}</p>
+      {% elif page.summary %}
+      <p class="post-summary">{{ page.summary | safe }}</p>
+      {% endif %}
+      {% if page.taxonomies.tags %}
+      <div class="tags-list">
+        {% for tag in page.taxonomies.tags %}
+        <a class="tag-badge" href="{{ get_taxonomy_url(kind='tags', name=tag) | safe }}">#{{ tag }}</a>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </li>
+    {% endif %}
+    {% else %}
+    <li>Записей пока нет.</li>
+    {% endfor %}
+  </ul>
+
+  {% if posts_section.pages | length > 5 %}
+  <div style="margin-top: 1.5rem;">
+    <a href="{{ get_url(path='posts') | safe }}">Все публикации &rarr;</a>
+  </div>
+  {% endif %}
+</section>
+{% endblock content %}

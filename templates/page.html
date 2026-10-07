@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}{{ page.title }} | {{ config.title }}{% endblock title %}
+{% block description %}{{ page.description | default(value=config.description) }}{% endblock description %}
+
+{% block content %}
+<article>
+  <header class="article-header">
+    <h1 class="article-title">{{ page.title }}</h1>
+    {% if page.date %}
+    <div class="post-meta">
+      <time datetime="{{ page.date }}">{{ page.date | date(format="%d %B %Y") }}</time>
+      <span>•</span>
+      <span>{{ page.reading_time }} мин чтения</span>
+      {% if page.updated %}
+      <span>•</span>
+      <span>Обновлено: {{ page.updated | date(format="%d %B %Y") }}</span>
+      {% endif %}
+    </div>
+    {% endif %}
+
+    {% if page.taxonomies.tags %}
+    <div class="tags-list" style="margin-top: 0.8rem;">
+      {% for tag in page.taxonomies.tags %}
+      <a class="tag-badge" href="{{ get_taxonomy_url(kind='tags', name=tag) | safe }}">#{{ tag }}</a>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </header>
+
+  <div class="article-body">
+    {{ page.content | safe }}
+  </div>
+
+  {% if page.lower or page.higher %}
+  <hr>
+  <nav style="display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap;">
+    <div>
+      {% if page.lower %}
+      <span style="font-size: 0.85rem; color: var(--text-muted); display: block;">&larr; Предыдущая</span>
+      <a href="{{ page.lower.permalink | safe }}">{{ page.lower.title }}</a>
+      {% endif %}
+    </div>
+    <div style="text-align: right;">
+      {% if page.higher %}
+      <span style="font-size: 0.85rem; color: var(--text-muted); display: block;">Следующая &rarr;</span>
+      <a href="{{ page.higher.permalink | safe }}">{{ page.higher.title }}</a>
+      {% endif %}
+    </div>
+  </nav>
+  {% endif %}
+</article>
+{% endblock content %}

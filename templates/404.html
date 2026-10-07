@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block title %}404 — Страница не найдена | {{ config.title }}{% endblock title %}
+
+{% block content %}
+<div style="text-align: center; padding: 4rem 1rem;">
+  <h1 style="font-size: 3.5rem; margin-bottom: 0.5rem;">404</h1>
+  <p style="color: var(--text-muted); font-size: 1.2rem; margin-bottom: 2rem;">Страница не найдена или была перемещена.</p>
+  <a href="{{ config.base_url | safe }}" class="tag-badge" style="font-size: 1rem; padding: 0.5rem 1.2rem;">На главную</a>
+</div>
+{% endblock content %}
