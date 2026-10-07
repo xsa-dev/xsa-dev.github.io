@@ -5,20 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{% block title %}{{ config.title }}{% endblock title %}</title>
   <meta name="description" content="{% block description %}{{ config.description }}{% endblock description %}">
-  <link rel="stylesheet" href="{{ get_url(path='style.css') | safe }}">
+  <link rel="stylesheet" href="/style.css">
   {% if config.generate_feeds %}
-  <link rel="alternate" type="application/atom+xml" title="Atom Feed" href="{{ get_url(path='atom.xml') | safe }}">
-  <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="{{ get_url(path='rss.xml') | safe }}">
+  <link rel="alternate" type="application/atom+xml" title="Atom Feed" href="/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="/rss.xml">
   {% endif %}
 </head>
 <body>
   <div class="container">
     <header class="site-header">
-      <a href="{{ config.base_url | safe }}" class="site-title">{{ config.title }}</a>
+      <a href="/" class="site-title">{{ config.title }}</a>
       <nav class="site-nav">
-        <a href="{{ get_url(path='posts') | safe }}">Статьи</a>
-        <a href="{{ get_url(path='tags') | safe }}">Теги</a>
-        <a href="{{ get_url(path='about') | safe }}">Обо мне</a>
+        <a href="/posts/">Статьи</a>
+        <a href="/tags/">Теги</a>
+        <a href="/about/">Обо мне</a>
       </nav>
     </header>
 
@@ -36,7 +36,7 @@
         <a href="{{ config.extra.telegram }}" target="_blank" rel="noopener">Telegram</a>
         {% endif %}
         {% if config.generate_feeds %}
-        <a href="{{ get_url(path='atom.xml') | safe }}">RSS</a>
+        <a href="/atom.xml">RSS</a>
         {% endif %}
       </div>
     </footer>

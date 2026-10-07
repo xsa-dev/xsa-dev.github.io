@@ -170,8 +170,8 @@ img {
 }
 
 .post-item {
-  margin-bottom: 1.75rem;
-  padding-bottom: 1.75rem;
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
   border-bottom: 1px solid var(--border-color);
 }
 
@@ -189,24 +189,39 @@ img {
 }
 
 .post-title {
-  font-size: 1.35rem;
+  font-size: 1.4rem;
   font-weight: 600;
-  margin: 0.2rem 0 0.5rem;
+  margin: 0.25rem 0 0.5rem;
 }
 
 .post-title a {
   color: var(--text-color);
+  text-decoration: none;
+  transition: color 0.15s ease;
 }
 
 .post-title a:hover {
   color: var(--link-color);
-  text-decoration: none;
+  text-decoration: underline;
 }
 
 .post-summary {
   color: var(--text-muted);
-  font-size: 0.95rem;
-  margin-bottom: 0.5rem;
+  font-size: 0.98rem;
+  margin-bottom: 0.6rem;
+  line-height: 1.6;
+}
+
+.read-more-link {
+  display: inline-block;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--link-color);
+  margin-top: 0.2rem;
+}
+
+.read-more-link:hover {
+  text-decoration: underline;
 }
 
 /* Tags */
@@ -214,7 +229,7 @@ img {
   display: flex;
   flex-wrap: wrap;
   gap: 0.4rem;
-  margin-top: 0.5rem;
+  margin-top: 0.75rem;
 }
 
 .tag-badge {

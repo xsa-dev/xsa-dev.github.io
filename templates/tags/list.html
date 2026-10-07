@@ -9,7 +9,7 @@
 
 <div class="tags-cloud" style="display: flex; flex-wrap: wrap; gap: 0.75rem;">
   {% for term in terms %}
-  <a class="tag-badge" style="font-size: 1rem; padding: 0.4rem 0.8rem;" href="{{ term.permalink | safe }}">
+  <a class="tag-badge" style="font-size: 1rem; padding: 0.4rem 0.8rem;" href="{{ term.path | safe }}">
     #{{ term.name }} ({{ term.pages | length }})
   </a>
   {% endfor %}

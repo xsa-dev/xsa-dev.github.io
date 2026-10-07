@@ -5,7 +5,7 @@
 {% block content %}
 <header class="article-header">
   <h1 class="article-title">Публикации с тегом <span style="color: var(--link-color);">#{{ term.name }}</span></h1>
-  <p style="color: var(--text-muted);"><a href="{{ get_url(path='tags') | safe }}">&larr; Все теги</a></p>
+  <p style="color: var(--text-muted);"><a href="/tags/">&larr; Все теги</a></p>
 </header>
 
 <ul class="post-list">
@@ -17,11 +17,14 @@
       <span>{{ page.reading_time }} мин чтения</span>
     </div>
     <h2 class="post-title" style="margin-top: 0.2rem;">
-      <a href="{{ page.permalink | safe }}">{{ page.title }}</a>
+      <a href="{{ page.path | safe }}">{{ page.title }}</a>
     </h2>
     {% if page.description %}
     <p class="post-summary">{{ page.description }}</p>
     {% endif %}
+    <div>
+      <a class="read-more-link" href="{{ page.path | safe }}">Читать далее &rarr;</a>
+    </div>
   </li>
   {% endfor %}
 </ul>

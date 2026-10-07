@@ -25,17 +25,20 @@
       <span>{{ page.reading_time }} мин чтения</span>
     </div>
     <h2 class="post-title" style="margin-top: 0.2rem;">
-      <a href="{{ page.permalink | safe }}">{{ page.title }}</a>
+      <a href="{{ page.path | safe }}">{{ page.title }}</a>
     </h2>
     {% if page.description %}
     <p class="post-summary">{{ page.description }}</p>
     {% elif page.summary %}
     <p class="post-summary">{{ page.summary | safe }}</p>
     {% endif %}
+    <div>
+      <a class="read-more-link" href="{{ page.path | safe }}">Читать далее &rarr;</a>
+    </div>
     {% if page.taxonomies.tags %}
     <div class="tags-list">
       {% for tag in page.taxonomies.tags %}
-      <a class="tag-badge" href="{{ get_taxonomy_url(kind='tags', name=tag) | safe }}">#{{ tag }}</a>
+      <a class="tag-badge" href="/tags/{{ tag }}/">#{{ tag }}</a>
       {% endfor %}
     </div>
     {% endif %}

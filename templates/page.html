@@ -22,7 +22,7 @@
     {% if page.taxonomies.tags %}
     <div class="tags-list" style="margin-top: 0.8rem;">
       {% for tag in page.taxonomies.tags %}
-      <a class="tag-badge" href="{{ get_taxonomy_url(kind='tags', name=tag) | safe }}">#{{ tag }}</a>
+      <a class="tag-badge" href="/tags/{{ tag }}/">#{{ tag }}</a>
       {% endfor %}
     </div>
     {% endif %}
@@ -38,13 +38,13 @@
     <div>
       {% if page.lower %}
       <span style="font-size: 0.85rem; color: var(--text-muted); display: block;">&larr; Предыдущая</span>
-      <a href="{{ page.lower.permalink | safe }}">{{ page.lower.title }}</a>
+      <a href="{{ page.lower.path | safe }}">{{ page.lower.title }}</a>
       {% endif %}
     </div>
     <div style="text-align: right;">
       {% if page.higher %}
       <span style="font-size: 0.85rem; color: var(--text-muted); display: block;">Следующая &rarr;</span>
-      <a href="{{ page.higher.permalink | safe }}">{{ page.higher.title }}</a>
+      <a href="{{ page.higher.path | safe }}">{{ page.higher.title }}</a>
       {% endif %}
     </div>
   </nav>
