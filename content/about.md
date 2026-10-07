@@ -1,8 +1,6 @@
 +++
 title = "Обо мне"
 date = 2026-10-07
-weight = 100
-template = "page.html"
 description = "Обо мне — системная инженерия, алгоритмический трейдинг, AI-агенты и MLOps."
 +++
 

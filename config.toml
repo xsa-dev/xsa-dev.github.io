@@ -1,46 +1,63 @@
-base_url = "https://xsa-dev.github.io"
 title = "Notes & Insights"
+base_url = "https://xsa-dev.github.io"
 description = "Блог об архитектуре систем, AI-агентах, распределенных системах и алгоритмическом трейдинге."
-default_language = "ru"
+author = "Alexei Savin"
 
-theme = "dose"
+theme = "duckquill"
 compile_sass = true
-
+minify_html = false
 build_search_index = true
+
 generate_feeds = true
-feed_filenames = ["atom.xml", "rss.xml"]
+feed_filenames = ["rss.xml", "atom.xml"]
+
+default_language = "ru"
 
 taxonomies = [
     { name = "tags", feed = true }
 ]
 
 [markdown]
+smart_punctuation = true
+bottom_footnotes = true
+github_alerts = true
 render_emoji = true
 
 [markdown.highlighting]
-light_theme = "github-light"
-dark_theme = "github-dark"
+light_theme = "solarized-light"
+dark_theme = "solarized-dark"
+style = "class"
+
+[search]
+index_format = "fuse_json"
 
 [extra]
-author = "Alexei Savin"
-subtitle = "Инженерия, алгоритмы, AI и архитектура"
-site_url = "https://xsa-dev.github.io"
-github = "https://github.com/xsa-dev"
-telegram = "https://t.me/AlphaPipeline"
-twitter = "https://x.com/alxy_dev"
-locale = "ru_RU"
 default_theme = "dark"
+accent_color = "#2563eb"
+accent_color_dark = "#38bdf8"
+show_copy_button = true
+show_reading_time = true
+show_share_button = true
+show_backlinks = false
+show_copyright = true
+show_powered_by = false
 
-social_media = [
-    { name = "GitHub", url = "https://github.com/xsa-dev" },
-    { name = "Telegram", url = "https://t.me/AlphaPipeline" },
-    { name = "Twitter", url = "https://x.com/alxy_dev" },
-    { name = "RSS", url = "/atom.xml" }
-]
+toc = true
+toc_inline = true
+toc_ordered = false
+
+separator = "•"
+title_separator = "-"
 
 [extra.verification]
 google = "h6MU4xCKlETYFu96RePJe-WvLESByNj7nuWTxGJlEyI"
 yandex = "32e94bd2030ab10f"
+
+[extra.analytics.umami]
+enabled = true
+script_url = "https://cloud.umami.is/script.js"
+website_id = "d5af6472-d4f2-4a7a-9f67-98c29e760009"
+domains = "xsa-dev.github.io"
 
 [extra.giscus]
 enabled = true
@@ -55,23 +72,24 @@ theme = "preferred_color_scheme"
 lang = "ru"
 loading = "lazy"
 
-[extra.analytics.umami]
-enabled = true
-script_url = "https://cloud.umami.is/script.js"
-website_id = "d5af6472-d4f2-4a7a-9f67-98c29e760009"
-domains = "xsa-dev.github.io"
+[extra.nav]
+show_feed = true
+show_theme_switcher = true
+show_repo = false
+links = [
+    { url = "/posts/", name = "Статьи" },
+    { url = "/tags/", name = "Теги" },
+    { url = "/about/", name = "Обо мне" }
+]
 
-[extra.analytics.google]
-enabled = false
-tag_id = ""
-
-[extra.analytics.yandex]
-enabled = false
-counter_id = ""
-webvisor = false
-clickmap = true
-tracklinks = true
-
-[extra.analytics.facebook]
-enabled = false
-pixel_id = ""
+[extra.footer]
+links = [
+    { url = "/posts/", name = "Статьи" },
+    { url = "/tags/", name = "Теги" },
+    { url = "/about/", name = "Обо мне" }
+]
+socials = [
+    { url = "https://github.com/xsa-dev", name = "GitHub", icon = "%3Csvg role='img' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Ctitle%3EGitHub%3C/title%3E%3Cpath d='M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12'/%3E%3C/svg%3E" },
+    { url = "https://t.me/AlphaPipeline", name = "Telegram", icon = "%3Csvg role='img' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Ctitle%3ETelegram%3C/title%3E%3Cpath d='M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.121l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.832.922z'/%3E%3C/svg%3E" },
+    { url = "https://x.com/alxy_dev", name = "Twitter", icon = "%3Csvg role='img' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Ctitle%3EX%3C/title%3E%3Cpath d='M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z'/%3E%3C/svg%3E" }
+]
