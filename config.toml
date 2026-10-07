@@ -3,6 +3,9 @@ title = "Notes & Insights"
 description = "Блог об архитектуре систем, AI-агентах, распределенных системах и алгоритмическом трейдинге."
 default_language = "ru"
 
+theme = "dose"
+compile_sass = true
+
 build_search_index = true
 generate_feeds = true
 feed_filenames = ["atom.xml", "rss.xml"]
@@ -15,7 +18,8 @@ taxonomies = [
 render_emoji = true
 
 [markdown.highlighting]
-theme = "ayu-dark"
+light_theme = "github-light"
+dark_theme = "github-dark"
 
 [extra]
 author = "Alexei Savin"
@@ -25,6 +29,14 @@ github = "https://github.com/xsa-dev"
 telegram = "https://t.me/AlphaPipeline"
 twitter = "https://x.com/alxy_dev"
 locale = "ru_RU"
+default_theme = "dark"
+
+social_media = [
+    { name = "GitHub", url = "https://github.com/xsa-dev" },
+    { name = "Telegram", url = "https://t.me/AlphaPipeline" },
+    { name = "Twitter", url = "https://x.com/alxy_dev" },
+    { name = "RSS", url = "/atom.xml" }
+]
 
 [extra.verification]
 google = "h6MU4xCKlETYFu96RePJe-WvLESByNj7nuWTxGJlEyI"

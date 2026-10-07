@@ -1,6 +1,9 @@
 +++
 title = "Обо мне"
+date = 2026-10-07
+weight = 100
 template = "page.html"
+description = "Обо мне — системная инженерия, алгоритмический трейдинг, AI-агенты и MLOps."
 +++
 
 Привет! Я занимаюсь разработкой систем, автоматизацией, алгоритмическим трейдингом и AI-агентами.
@@ -13,5 +16,6 @@ template = "page.html"
 
 ## Контакты
 
-- **GitHub:** [github.com](https://github.com)
+- **GitHub:** [github.com/xsa-dev](https://github.com/xsa-dev)
 - **Telegram:** [@AlphaPipeline](https://t.me/AlphaPipeline)
+- **X / Twitter:** [@alxy_dev](https://x.com/alxy_dev)

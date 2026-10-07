@@ -1,17 +1,18 @@
 {% extends "base.html" %}
 
-{% block title %}{{ page.title }} | {{ config.title }}{% endblock title %}
-{% block seo_title %}{{ page.title }} | {{ config.title }}{% endblock seo_title %}
-{% block description %}{{ page.description | default(value=config.description) }}{% endblock description %}
-{% block canonical %}{{ page.permalink | safe }}{% endblock canonical %}
-{% block og_type %}article{% endblock og_type %}
-{% block og_title %}{{ page.title }}{% endblock og_title %}
-{% block og_description %}{{ page.description | default(value=config.description) }}{% endblock og_description %}
-{% block og_url %}{{ page.permalink | safe }}{% endblock og_url %}
-{% block twitter_title %}{{ page.title }}{% endblock twitter_title %}
-{% block twitter_description %}{{ page.description | default(value=config.description) }}{% endblock twitter_description %}
+{% block title %}{{ page.title }} - {{ config.title }}{% endblock title %}
 
-{% block json_ld %}
+{% block page_meta %}
+<meta name="title" content="{{ page.title }} - {{ config.title }}">
+<meta name="description" content="{{ page.description | default(value=config.description) }}">
+<link rel="canonical" href="{{ page.permalink | safe }}">
+<meta property="og:type" content="article">
+<meta property="og:title" content="{{ page.title }}">
+<meta property="og:description" content="{{ page.description | default(value=config.description) }}">
+<meta property="og:url" content="{{ page.permalink | safe }}">
+<meta name="twitter:title" content="{{ page.title }}">
+<meta name="twitter:description" content="{{ page.description | default(value=config.description) }}">
+
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -35,49 +36,42 @@
   }
 }
 </script>
-{% endblock json_ld %}
+{% endblock page_meta %}
 
 {% block content %}
-<article>
-  <header class="article-header">
-    <h1 class="article-title">{{ page.title }}</h1>
-    {% if page.date %}
-    <div class="post-meta">
-      <time datetime="{{ page.date }}">{{ page.date | date(format="%d %B %Y") }}</time>
-      <span>•</span>
-      <span>{{ page.reading_time }} мин чтения</span>
-      {% if page.updated %}
-      <span>•</span>
-      <span>Обновлено: {{ page.updated | date(format="%d %B %Y") }}</span>
-      {% endif %}
-    </div>
-    {% endif %}
+<main class="article-content">
+  <p><a href="/">..</a>/posts/{{ page.slug }}</p>
+  <h1>{{ page.title }}</h1>
+  <p>
+    Опубликовано: <time datetime="{{ page.date }}">{{ page.date | date(format="%d.%m.%Y") }}</time>
+    {% if page.updated %}, Обновлено: <time datetime="{{ page.updated }}">{{ page.updated | date(format="%d.%m.%Y") }}</time>{% endif %}
+    &bull; {{ page.reading_time }} мин чтения
+  </p>
 
-    {% if page.taxonomies.tags %}
-    <div class="tags-list" style="margin-top: 0.8rem;">
-      {% for tag in page.taxonomies.tags %}
-      <a class="tag-badge" href="/tags/{{ tag }}/">#{{ tag }}</a>
-      {% endfor %}
-    </div>
-    {% endif %}
-  </header>
-
-  <div class="article-body">
-    {{ page.content | safe }}
+  {% if page.taxonomies.tags and page.taxonomies.tags | length > 0 %}
+  <div class="chips" style="margin-bottom: 1.5rem;">
+    {% for tag in page.taxonomies.tags %}
+    <span class="tag"><a href="/tags/{{ tag }}/" style="color: inherit; text-decoration: none;">{{ tag }}</a></span>
+    {% endfor %}
   </div>
+  {% endif %}
+
+  <hr />
+
+  {{ page.content | safe }}
 
   {% if page.lower or page.higher %}
-  <hr>
-  <nav style="display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap;">
+  <hr />
+  <nav style="display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin: 2rem 0;">
     <div>
       {% if page.lower %}
-      <span style="font-size: 0.85rem; color: var(--text-muted); display: block;">&larr; Предыдущая</span>
+      <span style="font-size: 0.85rem; opacity: 0.7; display: block;">&larr; Назад</span>
       <a href="{{ page.lower.path | safe }}">{{ page.lower.title }}</a>
       {% endif %}
     </div>
     <div style="text-align: right;">
       {% if page.higher %}
-      <span style="font-size: 0.85rem; color: var(--text-muted); display: block;">Следующая &rarr;</span>
+      <span style="font-size: 0.85rem; opacity: 0.7; display: block;">Вперед &rarr;</span>
       <a href="{{ page.higher.path | safe }}">{{ page.higher.title }}</a>
       {% endif %}
     </div>
@@ -85,8 +79,8 @@
   {% endif %}
 
   {% if config.extra.giscus and config.extra.giscus.enabled %}
-  <section class="comments-section" style="margin-top: 3.5rem; padding-top: 2rem; border-top: 1px solid var(--border-color);">
-    <h2 style="font-size: 1.25rem; margin-bottom: 1.5rem;">Комментарии</h2>
+  <section class="comments-section" style="margin-top: 3.5rem; padding-top: 2rem; border-top: 1px dashed currentColor;">
+    <h3 style="margin-bottom: 1.5rem;">// Комментарии</h3>
     <div class="giscus"></div>
     <script src="https://giscus.app/client.js"
             data-repo="{{ config.extra.giscus.repo }}"
@@ -106,5 +100,5 @@
     </script>
   </section>
   {% endif %}
-</article>
+</main>
 {% endblock content %}

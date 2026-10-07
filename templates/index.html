@@ -1,60 +1,28 @@
 {% extends "base.html" %}
 
 {% block content %}
-<section class="hero" style="margin-bottom: 2.5rem;">
-  <h1>{{ config.title }}</h1>
-  {% if config.extra.subtitle %}
-  <p style="font-size: 1.15rem; color: var(--text-muted); margin-top: 0.25rem;">
-    {{ config.extra.subtitle }}
-  </p>
-  {% endif %}
-  <p>{{ section.content | safe }}</p>
-</section>
-
-<section>
-  <h2 style="font-size: 1.3rem; margin-bottom: 1.2rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted);">
-    Свежие публикации
-  </h2>
-
-  {% set posts_section = get_section(path="posts/_index.md") %}
-  <ul class="post-list">
-    {% for page in posts_section.pages %}
-    {% if loop.index0 < 5 %}
-    <li class="post-item">
-      <div class="post-meta">
-        <time datetime="{{ page.date }}">{{ page.date | date(format="%d.%m.%Y") }}</time>
-        <span>•</span>
-        <span>{{ page.reading_time }} мин чтения</span>
-      </div>
-      <h3 class="post-title">
-        <a href="{{ page.path | safe }}">{{ page.title }}</a>
-      </h3>
-      {% if page.description %}
-      <p class="post-summary">{{ page.description }}</p>
-      {% elif page.summary %}
-      <p class="post-summary">{{ page.summary | safe }}</p>
-      {% endif %}
-      <div>
-        <a class="read-more-link" href="{{ page.path | safe }}">Читать далее &rarr;</a>
-      </div>
-      {% if page.taxonomies.tags %}
-      <div class="tags-list">
+<header>
+  {% include "parts/me.html" %}
+</header>
+<main>
+  {% for page in section.pages %}
+  <article onclick="redirect('{{ page.path | safe }}')">
+    <h3>{{ page.title }}</h3>
+    <time>{{ page.date | date(format="%d.%m.%Y") }}</time>
+    <p>{{ page.description }}</p>
+    <div class="chips">
+      {% if page.taxonomies.tags and page.taxonomies.tags | length > 0 %}
         {% for tag in page.taxonomies.tags %}
-        <a class="tag-badge" href="/tags/{{ tag }}/">#{{ tag }}</a>
+          <span class="tag">{{ tag }}</span>
         {% endfor %}
-      </div>
       {% endif %}
-    </li>
-    {% endif %}
-    {% else %}
-    <li>Записей пока нет.</li>
-    {% endfor %}
-  </ul>
-
-  {% if posts_section.pages | length > 5 %}
-  <div style="margin-top: 1.5rem;">
-    <a class="read-more-link" href="/posts/">Все публикации &rarr;</a>
-  </div>
+    </div>
+  </article>
+  {% if not loop.last %}
+  <hr />
   {% endif %}
-</section>
+  {% else %}
+  <p>Статей пока нет.</p>
+  {% endfor %}
+</main>
 {% endblock content %}
