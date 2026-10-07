@@ -29,7 +29,9 @@ locale = "ru_RU"
 [extra.giscus]
 enabled = true
 repo = "xsa-dev/xsa-dev.github.io"
+repo_id = "R_kgDOU_1sog"
 category = "General"
+category_id = "DIC_kwDOU_1sos4DHRpA"
 mapping = "pathname"
 reactions_enabled = "1"
 input_position = "bottom"
