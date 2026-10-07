@@ -27,7 +27,7 @@ twitter = "https://x.com/alxy_dev"
 locale = "ru_RU"
 
 [extra.verification]
-google = ""
+google = "h6MU4xCKlETYFu96RePJe-WvLESByNj7nuWTxGJlEyI"
 yandex = "32e94bd2030ab10f"
 
 [extra.giscus]
