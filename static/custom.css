@@ -376,190 +376,483 @@ body.zoom-lock-scroll {
 }
 
 /* --------------------------------------------------------------------------
-   6. Expandable Interactive Icon Dock Navigation
+   6. Modern Hybrid Navigation & Slide-Out Drawer (Linear / Apple style)
    -------------------------------------------------------------------------- */
-#site-nav.dock-nav-wrapper {
-  position: sticky !important;
-  top: 0.75rem !important;
-  z-index: 1000 !important;
-  display: flex !important;
-  justify-content: center !important;
-  width: 100% !important;
-  max-width: 100% !important;
-  margin: 0 auto !important;
-  padding: 0 1rem !important;
-  background: transparent !important;
-  box-shadow: none !important;
-  border: none !important;
-  pointer-events: none;
-}
 
-#site-nav.dock-nav-wrapper::before {
-  display: none !important;
-}
-
-#site-nav.dock-nav-wrapper nav.dock-nav {
-  pointer-events: auto;
-  display: inline-flex !important;
-  align-items: center !important;
-  background: rgba(15, 23, 42, 0.92) !important;
-  backdrop-filter: blur(20px) !important;
-  -webkit-backdrop-filter: blur(20px) !important;
-  border: 1px solid rgba(255, 255, 255, 0.14) !important;
-  border-radius: 9999px !important;
-  padding: 0.35rem 0.5rem !important;
-  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.6), 0 0 20px rgba(56, 189, 248, 0.12) !important;
-  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
-  max-width: 96vw !important;
-  width: auto !important;
-  height: auto !important;
-}
-
-#site-nav.dock-nav-wrapper nav.dock-nav:hover,
-#site-nav.dock-nav-wrapper nav.dock-nav.dock-expanded {
-  border-color: rgba(56, 189, 248, 0.4) !important;
-  box-shadow: 0 14px 40px -5px rgba(0, 0, 0, 0.7), 0 0 25px rgba(56, 189, 248, 0.22) !important;
-}
-
-#site-nav.dock-nav-wrapper ul.dock-list {
-  display: flex !important;
-  flex-direction: row !important;
-  flex-wrap: nowrap !important;
-  align-items: center !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  gap: 0.25rem !important;
-  list-style: none !important;
-}
-
-#site-nav.dock-nav-wrapper li.dock-item {
-  display: flex !important;
-  flex: none !important;
-  align-items: center !important;
-  margin: 0 !important;
-  padding: 0 !important;
-}
-
-#site-nav.dock-nav-wrapper a.dock-link,
-#site-nav.dock-nav-wrapper button.dock-btn,
-#site-nav.dock-nav-wrapper summary.dock-btn {
-  display: inline-flex !important;
-  flex-direction: row !important;
-  align-items: center !important;
-  justify-content: center !important;
-  padding: 0.45rem 0.65rem !important;
-  border-radius: 9999px !important;
-  text-decoration: none !important;
-  color: #94a3b8 !important;
-  font-size: 13.5px !important;
-  font-weight: 500 !important;
-  font-family: Inter, -apple-system, sans-serif !important;
-  background: transparent !important;
-  border: none !important;
-  cursor: pointer !important;
-  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease !important;
-  line-height: 1 !important;
-  flex: none !important;
-  width: auto !important;
-  height: auto !important;
-  min-width: 0 !important;
+/* Prevent body scroll when drawer is open */
+body.nav-drawer-locked {
   overflow: hidden !important;
 }
 
-#site-nav.dock-nav-wrapper a.dock-link:hover,
-#site-nav.dock-nav-wrapper button.dock-btn:hover,
-#site-nav.dock-nav-wrapper summary.dock-btn:hover {
+#site-nav.site-nav-header {
+  position: sticky !important;
+  top: 0.75rem !important;
+  z-index: 1000 !important;
+  width: 100% !important;
+  max-width: min(var(--container-width, 1180px), 94vw) !important;
+  margin: 0 auto !important;
+  padding: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+#site-nav.site-nav-header::before {
+  display: none !important;
+}
+
+.nav-bar-container {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  background: rgba(15, 23, 42, 0.88) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 9999px !important;
+  padding: 0.4rem 0.65rem 0.4rem 0.9rem !important;
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.5), 0 0 20px rgba(56, 189, 248, 0.08) !important;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease !important;
+}
+
+.nav-bar-container:hover {
+  border-color: rgba(56, 189, 248, 0.35) !important;
+  box-shadow: 0 12px 35px -5px rgba(0, 0, 0, 0.6), 0 0 25px rgba(56, 189, 248, 0.16) !important;
+}
+
+/* Brand Link */
+.nav-brand-pill {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+  text-decoration: none !important;
   color: #f8fafc !important;
-  background: rgba(255, 255, 255, 0.09) !important;
+  font-weight: 700 !important;
+  font-size: 14.5px !important;
+  letter-spacing: -0.01em !important;
+  transition: transform 0.2s ease, opacity 0.2s ease !important;
 }
 
-#site-nav.dock-nav-wrapper a.dock-link.active {
+.nav-brand-pill:hover {
+  opacity: 0.9 !important;
+  transform: translateY(-1px) !important;
+}
+
+.brand-emoji {
+  font-size: 16px !important;
+}
+
+.brand-name {
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  max-width: 220px !important;
+}
+
+/* Action Buttons */
+.nav-top-actions {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.35rem !important;
+}
+
+.nav-icon-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 36px !important;
+  height: 36px !important;
+  border-radius: 50% !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  background: rgba(255, 255, 255, 0.04) !important;
+  color: #94a3b8 !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  padding: 0 !important;
+}
+
+.nav-icon-btn:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: #f8fafc !important;
+  border-color: rgba(255, 255, 255, 0.18) !important;
+  transform: scale(1.06) !important;
+}
+
+.nav-action-svg {
+  width: 17px !important;
+  height: 17px !important;
+}
+
+/* Menu Toggle Pill */
+.nav-menu-toggle-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.45rem !important;
+  padding: 0.38rem 0.85rem !important;
+  border-radius: 9999px !important;
+  background: rgba(56, 189, 248, 0.12) !important;
+  border: 1px solid rgba(56, 189, 248, 0.28) !important;
   color: #38bdf8 !important;
-  background: rgba(56, 189, 248, 0.16) !important;
+  font-size: 13.5px !important;
   font-weight: 600 !important;
+  font-family: inherit !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
 }
 
-#site-nav.dock-nav-wrapper .dock-icon {
+.nav-menu-toggle-btn:hover {
+  background: rgba(56, 189, 248, 0.24) !important;
+  color: #ffffff !important;
+  border-color: rgba(56, 189, 248, 0.5) !important;
+  box-shadow: 0 0 15px rgba(56, 189, 248, 0.2) !important;
+}
+
+.menu-hamburger-svg {
+  width: 16px !important;
+  height: 16px !important;
+}
+
+/* --------------------------------------------------------------------------
+   7. Slide-Out Drawer Navigation Panel
+   -------------------------------------------------------------------------- */
+.drawer-backdrop {
+  position: fixed !important;
+  inset: 0 !important;
+  background: rgba(3, 7, 18, 0.65) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  z-index: 9998 !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s ease !important;
+}
+
+.drawer-backdrop.open {
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+}
+
+.site-drawer {
+  position: fixed !important;
+  top: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: min(360px, 88vw) !important;
+  height: 100vh !important;
+  background: rgba(11, 17, 32, 0.96) !important;
+  backdrop-filter: blur(28px) !important;
+  -webkit-backdrop-filter: blur(28px) !important;
+  border-left: 1px solid rgba(255, 255, 255, 0.12) !important;
+  box-shadow: -15px 0 50px rgba(0, 0, 0, 0.8) !important;
+  z-index: 9999 !important;
+  transform: translateX(100%) !important;
+  transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden !important;
+}
+
+.site-drawer.open {
+  transform: translateX(0) !important;
+}
+
+.drawer-header-bar {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 1.25rem 1.25rem 1rem !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+.drawer-brand {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+}
+
+.drawer-emoji {
+  font-size: 18px !important;
+}
+
+.drawer-brand-name {
+  color: #f8fafc !important;
+  font-weight: 700 !important;
+  font-size: 15px !important;
+}
+
+.drawer-dismiss-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 32px !important;
+  height: 32px !important;
+  border-radius: 50% !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: #94a3b8 !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+}
+
+.drawer-dismiss-btn:hover {
+  background: #ef4444 !important;
+  color: #ffffff !important;
+  border-color: #ef4444 !important;
+  transform: scale(1.08) !important;
+}
+
+.drawer-scroll-body {
+  flex: 1 !important;
+  overflow-y: auto !important;
+  padding: 1.25rem !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 1.75rem !important;
+}
+
+.drawer-group {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.6rem !important;
+}
+
+.drawer-group-title {
+  color: #64748b !important;
+  font-size: 11.5px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.06em !important;
+  padding-left: 0.25rem !important;
+}
+
+.drawer-nav-items {
+  list-style: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.4rem !important;
+}
+
+.drawer-row-link {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.85rem !important;
+  padding: 0.7rem 0.85rem !important;
+  border-radius: 12px !important;
+  text-decoration: none !important;
+  background: rgba(255, 255, 255, 0.02) !important;
+  border: 1px solid transparent !important;
+  transition: all 0.2s ease !important;
+}
+
+.drawer-row-link:hover {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+  transform: translateX(3px) !important;
+}
+
+.drawer-row-link.active {
+  background: rgba(56, 189, 248, 0.12) !important;
+  border-color: rgba(56, 189, 248, 0.28) !important;
+}
+
+.drawer-row-icon {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 36px !important;
+  height: 36px !important;
+  border-radius: 10px !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  color: #94a3b8 !important;
+  flex-shrink: 0 !important;
+}
+
+.drawer-row-link:hover .drawer-row-icon {
+  color: #38bdf8 !important;
+  background: rgba(56, 189, 248, 0.15) !important;
+}
+
+.drawer-row-link.active .drawer-row-icon {
+  background: rgba(56, 189, 248, 0.22) !important;
+  color: #38bdf8 !important;
+}
+
+.drawer-row-icon svg {
   width: 18px !important;
   height: 18px !important;
-  flex-shrink: 0 !important;
-  stroke: currentColor !important;
-  transition: transform 0.2s ease !important;
 }
 
-#site-nav.dock-nav-wrapper a.dock-link:hover .dock-icon,
-#site-nav.dock-nav-wrapper button.dock-btn:hover .dock-icon {
-  transform: scale(1.12) !important;
+.drawer-row-text {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.15rem !important;
 }
 
-/* Collapsed State: labels are 0 width */
-#site-nav.dock-nav-wrapper .dock-label {
-  display: inline-block;
-  max-width: 0;
-  opacity: 0;
-  overflow: hidden;
-  white-space: nowrap;
-  transform: translateX(-4px);
-  transition: max-width 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease, transform 0.2s ease, margin 0.2s ease;
-  margin-left: 0;
-}
-
-/* Expanded State or Item Hover: labels smoothly expand */
-#site-nav.dock-nav-wrapper .dock-expanded .dock-label,
-#site-nav.dock-nav-wrapper .dock-item:hover .dock-label {
-  max-width: 140px !important;
-  opacity: 1 !important;
-  transform: translateX(0) !important;
-  margin-left: 0.45rem !important;
-}
-
-#site-nav.dock-nav-wrapper .dock-toggle-btn {
-  background: rgba(56, 189, 248, 0.14) !important;
-  color: #38bdf8 !important;
-  border: 1px solid rgba(56, 189, 248, 0.3) !important;
+.drawer-row-title {
+  color: #f1f5f9 !important;
+  font-size: 14.5px !important;
   font-weight: 600 !important;
 }
 
-#site-nav.dock-nav-wrapper .dock-toggle-btn:hover {
-  background: rgba(56, 189, 248, 0.25) !important;
+.drawer-row-link.active .drawer-row-title {
+  color: #38bdf8 !important;
+}
+
+.drawer-row-caption {
+  color: #64748b !important;
+  font-size: 12px !important;
+}
+
+/* Utilities Grid Cards */
+.drawer-grid-cards {
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: 0.5rem !important;
+}
+
+.drawer-action-card {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.5rem !important;
+  padding: 0.75rem 0.5rem !important;
+  border-radius: 10px !important;
+  background: rgba(255, 255, 255, 0.03) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  color: #cbd5e1 !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  text-decoration: none !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+}
+
+.drawer-action-card:hover {
+  background: rgba(56, 189, 248, 0.12) !important;
+  border-color: rgba(56, 189, 248, 0.3) !important;
   color: #ffffff !important;
 }
 
-#site-nav.dock-nav-wrapper .dock-divider {
-  width: 1px !important;
-  height: 18px !important;
-  background: rgba(255, 255, 255, 0.15) !important;
-  margin: 0 0.15rem !important;
+.drawer-action-card svg {
+  width: 16px !important;
+  height: 16px !important;
+  color: #94a3b8 !important;
 }
 
-#site-nav.dock-nav-wrapper .dock-submenu {
-  position: absolute !important;
-  top: calc(100% + 0.6rem) !important;
-  left: 50% !important;
-  transform: translateX(-50%) !important;
-  background: rgba(15, 23, 42, 0.95) !important;
-  backdrop-filter: blur(16px) !important;
-  border: 1px solid rgba(255, 255, 255, 0.14) !important;
-  border-radius: 12px !important;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5) !important;
-  padding: 0.4rem !important;
+.drawer-action-card:hover svg {
+  color: #38bdf8 !important;
+}
+
+/* --------------------------------------------------------------------------
+   8. Clean Search Modal Overlay
+   -------------------------------------------------------------------------- */
+.site-search-modal {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 10005 !important;
   display: flex !important;
-  gap: 0.3rem !important;
-  list-style: none !important;
-  z-index: 1001 !important;
+  align-items: flex-start !important;
+  justify-content: center !important;
+  padding-top: 10vh !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  transition: opacity 0.2s ease, visibility 0.2s ease !important;
+}
+
+.site-search-modal.active {
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+}
+
+.search-modal-backdrop {
+  position: absolute !important;
+  inset: 0 !important;
+  background: rgba(3, 7, 18, 0.7) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+}
+
+.search-modal-card {
+  position: relative !important;
+  width: min(580px, 92vw) !important;
+  background: rgba(15, 23, 42, 0.96) !important;
+  border: 1px solid rgba(56, 189, 248, 0.3) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8), 0 0 30px rgba(56, 189, 248, 0.15) !important;
+  overflow: hidden !important;
+  z-index: 1 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  max-height: 75vh !important;
+}
+
+.search-modal-header {
+  display: flex !important;
+  align-items: center !important;
+  padding: 0.85rem 1rem !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  gap: 0.75rem !important;
+}
+
+.search-icon {
+  width: 18px !important;
+  height: 18px !important;
+  color: #38bdf8 !important;
+  flex-shrink: 0 !important;
+}
+
+#search-bar {
+  flex: 1 !important;
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+  color: #f8fafc !important;
+  font-size: 15px !important;
+  font-family: inherit !important;
+}
+
+.search-modal-close {
+  background: transparent !important;
+  border: none !important;
+  color: #64748b !important;
+  font-size: 16px !important;
+  cursor: pointer !important;
+  padding: 0.25rem 0.5rem !important;
+  border-radius: 6px !important;
+  transition: all 0.15s ease !important;
+}
+
+.search-modal-close:hover {
+  color: #f8fafc !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+}
+
+#search-results-container {
+  overflow-y: auto !important;
+  max-height: calc(75vh - 60px) !important;
+  padding: 0.5rem 0.75rem 1rem !important;
 }
 
 @media (max-width: 640px) {
-  #site-nav.dock-nav-wrapper {
-    top: 0.25rem !important;
-    padding: 0.25rem !important;
+  #site-nav.site-nav-header {
+    top: 0.4rem !important;
+    max-width: 96vw !important;
   }
-  #site-nav.dock-nav-wrapper a.dock-link,
-  #site-nav.dock-nav-wrapper button.dock-btn {
-    padding: 0.4rem 0.5rem !important;
+  .nav-bar-container {
+    padding: 0.35rem 0.5rem 0.35rem 0.75rem !important;
   }
-  #site-nav.dock-nav-wrapper .dock-icon {
-    width: 16px !important;
-    height: 16px !important;
+  .brand-name {
+    max-width: 140px !important;
+    font-size: 13.5px !important;
+  }
+  .nav-menu-toggle-btn {
+    padding: 0.32rem 0.65rem !important;
+    font-size: 12.5px !important;
   }
 }

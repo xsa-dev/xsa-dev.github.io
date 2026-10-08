@@ -1,160 +1,159 @@
-<header id="site-nav" class="dock-nav-wrapper">
-	<nav class="dock-nav" id="dock-nav">
-		<!-- Skip link for accessibility -->
-		<a href="#main-content" class="visually-hidden">
-			{{ <translate key="skip_to_content" default="Skip to Main Content" language_strings /> }}
-		</a>
+<header id="site-nav" class="site-nav-header">
+  <div class="nav-bar-container">
+    <!-- Brand / Logo -->
+    <a href="{{ get_url(path='/', lang=lang) }}" class="nav-brand-pill" title="{{ config.title }}">
+      <span class="brand-emoji">🐴</span>
+      <span class="brand-name">{{ config.title }}</span>
+    </a>
 
-		<ul class="dock-list">
-			<!-- Expand / Collapse Action Button -->
-			<li class="dock-item dock-item-toggle">
-				<button id="dock-toggle-btn" class="dock-btn dock-toggle-btn" title="Развернуть / Свернуть меню" aria-label="Toggle Menu">
-					<svg class="dock-icon dock-icon-toggle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-						<path d="M4 6h16M4 12h16M4 18h16"></path>
-					</svg>
-					<span class="dock-label">Меню</span>
-				</button>
-			</li>
+    <!-- Top Action Bar -->
+    <div class="nav-top-actions">
+      <!-- Search Button -->
+      {%- if config.build_search_index %}
+        <button id="search-toggle" class="nav-icon-btn" type="button" aria-expanded="false" aria-controls="search-container" title="Поиск (Ctrl+K)" aria-label="Открыть поиск">
+          <svg viewBox="0 0 24 24" class="nav-action-svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </button>
+      {%- endif %}
 
-			<li class="dock-divider"></li>
+      <!-- Theme Switcher Button -->
+      {%- if config.extra?.default_theme and config.extra.nav?.show_theme_switcher != false or config.extra.nav?.show_theme_switcher %}
+        <button id="quick-theme-toggle" class="nav-icon-btn" type="button" title="Переключить тему" aria-label="Сменить тему оформления">
+          <svg viewBox="0 0 24 24" class="nav-action-svg theme-icon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+          </svg>
+        </button>
+      {%- endif %}
 
-			<!-- Home -->
-			<li class="dock-item">
-				<a href="{{ get_url(path='/', lang=lang) }}" 
-				   class="dock-link {%- if current_url | default(value='/') | trim_end(pat='/') | safe == get_url(path='/', lang=lang) | trim_end(pat='/') | safe %} active{%- endif %}" 
-				   title="{{ config.title }}">
-					<svg class="dock-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-						<path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-						<polyline points="9 22 9 12 15 12 15 22"></polyline>
-					</svg>
-					<span class="dock-label">Главная</span>
-				</a>
-			</li>
+      <!-- Menu Toggle Pill -->
+      <button id="nav-drawer-toggle" class="nav-menu-toggle-btn" type="button" aria-expanded="false" aria-controls="nav-drawer" aria-label="Открыть меню навигации">
+        <svg viewBox="0 0 24 24" class="menu-hamburger-svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line class="line-top" x1="4" y1="7" x2="20" y2="7"></line>
+          <line class="line-mid" x1="4" y1="12" x2="20" y2="12"></line>
+          <line class="line-bot" x1="4" y1="17" x2="20" y2="17"></line>
+        </svg>
+        <span class="menu-btn-text">Меню</span>
+      </button>
+    </div>
+  </div>
 
-			<!-- Posts / Articles -->
-			<li class="dock-item">
-				<a href="{{ get_url(path='/posts/', lang=lang) }}" 
-				   class="dock-link {%- if current_url is defined and '/posts' in current_url %} active{%- endif %}" 
-				   title="Все статьи">
-					<svg class="dock-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-						<path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
-						<polyline points="14 2 14 8 20 8"></polyline>
-						<line x1="16" y1="13" x2="8" y2="13"></line>
-						<line x1="16" y1="17" x2="8" y2="17"></line>
-						<line x1="10" y1="9" x2="8" y2="9"></line>
-					</svg>
-					<span class="dock-label">Статьи</span>
-				</a>
-			</li>
+  <!-- Search Modal Overlay -->
+  {%- if config.build_search_index %}
+    <div id="search-container" class="site-search-modal" aria-hidden="true">
+      <div class="search-modal-backdrop" id="search-backdrop"></div>
+      <div class="search-modal-card">
+        <div class="search-modal-header">
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input id="search-bar" placeholder="Поиск по статьям и тегам..." autocomplete="off" type="search" disabled>
+          <button id="search-close-btn" class="search-modal-close" type="button" aria-label="Закрыть поиск">✕</button>
+        </div>
+        <div id="search-results-container">
+          <div id="search-results"></div>
+        </div>
+      </div>
+    </div>
+  {%- endif %}
 
-			<!-- Tags -->
-			<li class="dock-item">
-				<a href="{{ get_url(path='/tags/', lang=lang) }}" 
-				   class="dock-link {%- if current_url is defined and '/tags' in current_url %} active{%- endif %}" 
-				   title="Тематические теги">
-					<svg class="dock-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-						<path d="M12 2H2v10l9.29 9.29c.94.94 2.48.94 3.42 0l6.58-6.58c.94-.94.94-2.48 0-3.42L12 2Z"></path>
-						<path d="M7 7h.01"></path>
-					</svg>
-					<span class="dock-label">Теги</span>
-				</a>
-			</li>
+  <!-- Drawer Backdrop -->
+  <div id="nav-drawer-backdrop" class="drawer-backdrop" aria-hidden="true"></div>
 
-			<!-- About -->
-			<li class="dock-item">
-				<a href="{{ get_url(path='/about/', lang=lang) }}" 
-				   class="dock-link {%- if current_url is defined and '/about' in current_url %} active{%- endif %}" 
-				   title="О проекте">
-					<svg class="dock-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-						<circle cx="12" cy="12" r="10"></circle>
-						<line x1="12" y1="16" x2="12" y2="12"></line>
-						<line x1="12" y1="8" x2="12.01" y2="8"></line>
-					</svg>
-					<span class="dock-label">Обо мне</span>
-				</a>
-			</li>
+  <!-- Slide-out Navigation Drawer -->
+  <aside id="nav-drawer" class="site-drawer" aria-label="Главное меню" aria-hidden="true">
+    <div class="drawer-header-bar">
+      <div class="drawer-brand">
+        <span class="drawer-emoji">🐴</span>
+        <span class="drawer-brand-name">{{ config.title }}</span>
+      </div>
+      <button id="nav-drawer-close" class="drawer-dismiss-btn" type="button" aria-label="Закрыть меню">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
 
-			<li class="dock-divider"></li>
+    <div class="drawer-scroll-body">
+      <!-- Group 1: Navigation -->
+      <div class="drawer-group">
+        <div class="drawer-group-title">Разделы</div>
+        <ul class="drawer-nav-items">
+          <li>
+            <a href="{{ get_url(path='/', lang=lang) }}" class="drawer-row-link {%- if current_url | default(value='/') | trim_end(pat='/') | safe == get_url(path='/', lang=lang) | trim_end(pat='/') | safe %} active{%- endif %}">
+              <div class="drawer-row-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+              </div>
+              <div class="drawer-row-text">
+                <span class="drawer-row-title">Главная</span>
+                <span class="drawer-row-caption">Свежие материалы и исследования</span>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="{{ get_url(path='/posts/', lang=lang) }}" class="drawer-row-link {%- if current_url is defined and '/posts' in current_url %} active{%- endif %}">
+              <div class="drawer-row-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><line x1="10" y1="9" x2="8" y2="9"></line></svg>
+              </div>
+              <div class="drawer-row-text">
+                <span class="drawer-row-title">Все статьи</span>
+                <span class="drawer-row-caption">AI-агенты, алготрейдинг, архитектура</span>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="{{ get_url(path='/tags/', lang=lang) }}" class="drawer-row-link {%- if current_url is defined and '/tags' in current_url %} active{%- endif %}">
+              <div class="drawer-row-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2H2v10l9.29 9.29c.94.94 2.48.94 3.42 0l6.58-6.58c.94-.94.94-2.48 0-3.42L12 2Z"></path><path d="M7 7h.01"></path></svg>
+              </div>
+              <div class="drawer-row-text">
+                <span class="drawer-row-title">Тематические теги</span>
+                <span class="drawer-row-caption">Каталог статей по направлениям</span>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="{{ get_url(path='/about/', lang=lang) }}" class="drawer-row-link {%- if current_url is defined and '/about' in current_url %} active{%- endif %}">
+              <div class="drawer-row-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+              </div>
+              <div class="drawer-row-text">
+                <span class="drawer-row-title">О проекте</span>
+                <span class="drawer-row-caption">Автор, миссия и стек блога</span>
+              </div>
+            </a>
+          </li>
+        </ul>
+      </div>
 
-			<!-- Search -->
-			{%- if config.build_search_index %}
-				<li class="dock-item" id="search">
-					<button id="search-toggle" class="dock-btn" title="{{ <translate key='search' default='Search' language_strings /> }}" aria-label="Search">
-						<svg class="dock-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-							<circle cx="11" cy="11" r="8"></circle>
-							<line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-						</svg>
-						<span class="dock-label">Поиск</span>
-					</button>
-				</li>
-			{%- endif %}
+      <!-- Group 2: Quick Tools & Channels -->
+      <div class="drawer-group">
+        <div class="drawer-group-title">Ресурсы</div>
+        <div class="drawer-grid-cards">
+          <button id="drawer-search-card" class="drawer-action-card" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <span class="card-label">Поиск</span>
+          </button>
 
-			<!-- Theme Switcher -->
-			{%- if config.extra?.default_theme and config.extra.nav?.show_theme_switcher != false or config.extra.nav?.show_theme_switcher %}
-				<li class="dock-item" id="theme-switcher">
-					<details class="closable">
-						<summary class="dock-btn" title="{{ <translate key='theme' default='Theme' language_strings /> }}">
-							<svg class="dock-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-								<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
-							</svg>
-							<span class="dock-label">Тема</span>
-						</summary>
-						<ul class="dock-submenu">
-							<li>
-								<button class="circle" id="theme-light" title="{{ <translate key='theme_light' default='Switch to Light Theme' language_strings /> }}">
-									<i class="icon"></i>
-								</button>
-							</li>
-							<li>
-								<button class="circle" id="theme-dark" title="{{ <translate key='theme_dark' default='Switch to Dark Theme' language_strings /> }}">
-									<i class="icon"></i>
-								</button>
-							</li>
-							<li>
-								<button class="circle" id="theme-system" title="{{ <translate key='theme_system' default='Use System Theme' language_strings /> }}">
-									<i class="icon"></i>
-								</button>
-							</li>
-						</ul>
-					</details>
-				</li>
-			{%- endif %}
+          <button id="drawer-theme-card" class="drawer-action-card" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path></svg>
+            <span class="card-label">Тема</span>
+          </button>
 
-			<!-- Feed (RSS) -->
-			{%- if config.generate_feeds and config.extra.nav?.show_feed %}
-				<li class="dock-item" id="feed">
-					<a class="dock-link" href="{{ get_url(path=config.feed_filenames[0], lang=lang) }}" title="RSS / Feed">
-						<svg class="dock-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-							<path d="M4 11a9 9 0 0 1 9 9"></path>
-							<path d="M4 4a16 16 0 0 1 16 16"></path>
-							<circle cx="5" cy="19" r="1"></circle>
-						</svg>
-						<span class="dock-label">RSS</span>
-					</a>
-				</li>
-			{%- endif %}
+          <a href="{{ get_url(path='rss.xml', lang=lang) }}" class="drawer-action-card">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg>
+            <span class="card-label">RSS</span>
+          </a>
 
-			<!-- GitHub Source -->
-			<li class="dock-item" id="repo">
-				<a class="dock-link" href="https://github.com/xsa-dev/xsa-dev.github.io" title="GitHub Репозиторий" target="_blank" rel="noopener noreferrer">
-					<svg class="dock-icon" viewBox="0 0 24 24" fill="currentColor">
-						<path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
-					</svg>
-					<span class="dock-label">GitHub</span>
-				</a>
-			</li>
-		</ul>
-	</nav>
-
-	{%- if config.build_search_index %}
-		<div id="search-container">
-			<label for="search-bar" class="visually-hidden">
-				{{- <translate key="search" default="Search" language_strings /> -}}
-			</label>
-			<input id="search-bar" placeholder="{{ <translate key='search_for' default='Search for' language_strings /> }}…" autocomplete="off" type="search" disabled>
-			<div id="search-results-container">
-				<div id="search-results"></div>
-			</div>
-		</div>
-	{%- endif %}
+          <a href="https://github.com/xsa-dev/xsa-dev.github.io" target="_blank" rel="noopener noreferrer" class="drawer-action-card">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            <span class="card-label">GitHub</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </aside>
 </header>

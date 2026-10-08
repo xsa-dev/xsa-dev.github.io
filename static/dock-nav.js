@@ -1,53 +1,130 @@
 /**
- * Interactive Expandable / Collapsible Dock Navigation for Notes & Insights
- * Shows compact icons by default, expands labels on toggle/click.
+ * Modern Responsive Hybrid Navigation Drawer & Search Controller
+ * Notes & Insights (https://xsa-dev.github.io)
  */
 document.addEventListener('DOMContentLoaded', () => {
-  const dockNav = document.getElementById('dock-nav');
-  const toggleBtn = document.getElementById('dock-toggle-btn');
-  
-  if (!dockNav || !toggleBtn) return;
+  // Drawer Elements
+  const drawerToggle = document.getElementById('nav-drawer-toggle');
+  const drawerClose = document.getElementById('nav-drawer-close');
+  const drawerBackdrop = document.getElementById('nav-drawer-backdrop');
+  const drawer = document.getElementById('nav-drawer');
 
-  function toggleDock(e) {
-    if (e) e.stopPropagation();
-    const isExpanded = dockNav.classList.toggle('dock-expanded');
-    toggleBtn.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
-    
-    // Animate hamburger to X
-    const toggleIcon = toggleBtn.querySelector('.dock-icon-toggle');
-    if (toggleIcon) {
-      if (isExpanded) {
-        toggleIcon.innerHTML = '<line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line>';
+  // Search Elements
+  const searchToggle = document.getElementById('search-toggle');
+  const searchCardTrigger = document.getElementById('drawer-search-card');
+  const searchCloseBtn = document.getElementById('search-close-btn');
+  const searchBackdrop = document.getElementById('search-backdrop');
+  const searchContainer = document.getElementById('search-container');
+  const searchBar = document.getElementById('search-bar');
+
+  // Theme Elements
+  const quickThemeToggle = document.getElementById('quick-theme-toggle');
+  const drawerThemeCard = document.getElementById('drawer-theme-card');
+
+  // --- 1. Drawer Logic ---
+  function openDrawer() {
+    if (!drawer) return;
+    drawer.classList.add('open');
+    drawer.setAttribute('aria-hidden', 'false');
+    if (drawerBackdrop) drawerBackdrop.classList.add('open');
+    if (drawerToggle) drawerToggle.setAttribute('aria-expanded', 'true');
+    document.body.classList.add('nav-drawer-locked');
+  }
+
+  function closeDrawer() {
+    if (!drawer) return;
+    drawer.classList.remove('open');
+    drawer.setAttribute('aria-hidden', 'true');
+    if (drawerBackdrop) drawerBackdrop.classList.remove('open');
+    if (drawerToggle) drawerToggle.setAttribute('aria-expanded', 'false');
+    document.body.classList.remove('nav-drawer-locked');
+  }
+
+  if (drawerToggle) {
+    drawerToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (drawer.classList.contains('open')) {
+        closeDrawer();
       } else {
-        toggleIcon.innerHTML = '<path d="M4 6h16M4 12h16M4 18h16"></path>';
+        openDrawer();
       }
+    });
+  }
+
+  if (drawerClose) drawerClose.addEventListener('click', closeDrawer);
+  if (drawerBackdrop) drawerBackdrop.addEventListener('click', closeDrawer);
+
+  // --- 2. Search Modal Logic ---
+  function openSearch() {
+    closeDrawer(); // Close drawer if open
+    if (!searchContainer) return;
+    searchContainer.classList.add('active');
+    searchContainer.setAttribute('aria-hidden', 'false');
+    if (searchToggle) searchToggle.setAttribute('aria-expanded', 'true');
+    
+    // Ensure search bar is enabled and focused
+    if (searchBar) {
+      searchBar.disabled = false;
+      setTimeout(() => searchBar.focus(), 80);
     }
   }
 
-  function collapseDock() {
-    if (dockNav.classList.contains('dock-expanded')) {
-      dockNav.classList.remove('dock-expanded');
-      toggleBtn.setAttribute('aria-expanded', 'false');
-      const toggleIcon = toggleBtn.querySelector('.dock-icon-toggle');
-      if (toggleIcon) {
-        toggleIcon.innerHTML = '<path d="M4 6h16M4 12h16M4 18h16"></path>';
-      }
-    }
+  function closeSearch() {
+    if (!searchContainer) return;
+    searchContainer.classList.remove('active');
+    searchContainer.setAttribute('aria-hidden', 'true');
+    if (searchToggle) searchToggle.setAttribute('aria-expanded', 'false');
   }
 
-  toggleBtn.addEventListener('click', toggleDock);
+  if (searchToggle) {
+    searchToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (searchContainer.classList.contains('active')) {
+        closeSearch();
+      } else {
+        openSearch();
+      }
+    });
+  }
 
-  // Close when clicking outside
-  document.addEventListener('click', (e) => {
-    if (!dockNav.contains(e.target)) {
-      collapseDock();
-    }
-  });
+  if (searchCardTrigger) {
+    searchCardTrigger.addEventListener('click', (e) => {
+      e.stopPropagation();
+      openSearch();
+    });
+  }
 
-  // Close on Escape key
+  if (searchCloseBtn) searchCloseBtn.addEventListener('click', closeSearch);
+  if (searchBackdrop) searchBackdrop.addEventListener('click', closeSearch);
+
+  // --- 3. Quick Theme Toggle Logic ---
+  function toggleTheme() {
+    const currentTheme = document.documentElement.getAttribute('data-theme') || 
+      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    
+    document.documentElement.setAttribute('data-theme', nextTheme);
+    localStorage.setItem('theme', nextTheme);
+  }
+
+  if (quickThemeToggle) quickThemeToggle.addEventListener('click', toggleTheme);
+  if (drawerThemeCard) drawerThemeCard.addEventListener('click', toggleTheme);
+
+  // --- 4. Global Keyboard Shortcuts (Escape to close, Ctrl+K / Cmd+K for search) ---
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
-      collapseDock();
+      if (searchContainer && searchContainer.classList.contains('active')) {
+        closeSearch();
+      } else if (drawer && drawer.classList.contains('open')) {
+        closeDrawer();
+      }
+    } else if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+      e.preventDefault();
+      if (searchContainer && searchContainer.classList.contains('active')) {
+        closeSearch();
+      } else {
+        openSearch();
+      }
     }
   });
 });
