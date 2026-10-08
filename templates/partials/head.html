@@ -82,6 +82,7 @@
 	{%- endif %}
 
 	{%- if page?.extra?.mermaid or section?.extra?.mermaid or config.extra?.mermaid %}
+		<script type="text/javascript" defer src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
 		{%- set scripts = [...scripts, "mermaid-init.js"] %}
 	{%- endif %}
 
