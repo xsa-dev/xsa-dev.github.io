@@ -260,3 +260,117 @@ h1 a, h2 a, h3 a, h4 a, h5 a, h6 a,
 #sidebar a:hover {
   color: var(--accent-color);
 }
+
+
+/* --------------------------------------------------------------------------
+   5. Medium-Style Image Zoom Lightbox
+   -------------------------------------------------------------------------- */
+
+img.zoomable-img {
+  cursor: zoom-in;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+  border-radius: 8px;
+}
+
+img.zoomable-img:hover {
+  filter: brightness(1.04);
+}
+
+.zoom-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.zoom-overlay.zoom-active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.zoom-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(8, 12, 20, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  cursor: zoom-out;
+}
+
+.zoom-content {
+  position: relative;
+  max-width: 94vw;
+  max-height: 92vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 1;
+}
+
+.zoom-target-img {
+  max-width: 94vw;
+  max-height: 85vh;
+  object-fit: contain;
+  border-radius: 12px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8), 0 0 35px rgba(56, 189, 248, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  cursor: zoom-out;
+  animation: zoomImgIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes zoomImgIn {
+  from {
+    transform: scale(0.92);
+    opacity: 0.8;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.zoom-caption {
+  margin-top: 14px;
+  color: #94a3b8;
+  font-size: 13px;
+  font-family: "JetBrains Mono", monospace;
+  text-align: center;
+  background: rgba(15, 23, 42, 0.8);
+  padding: 4px 14px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.zoom-close-btn {
+  position: absolute;
+  top: -42px;
+  right: 0;
+  background: rgba(30, 41, 59, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #e2e8f0;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 13px;
+  transition: all 0.15s ease;
+}
+
+.zoom-close-btn:hover {
+  background: #ef4444;
+  color: #fff;
+  border-color: #ef4444;
+  transform: scale(1.1);
+}
+
+body.zoom-lock-scroll {
+  overflow: hidden !important;
+}
