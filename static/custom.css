@@ -1,75 +1,9 @@
 /* ==========================================================================
-   Modern Clean Link & Responsive Typography Styling for Notes & Insights
+   Modern Clean Link & Proportional Typography for Notes & Insights
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
-   1. Mobile Viewport & Horizontal Overflow Prevention (iOS / iPhone Pro Max)
-   -------------------------------------------------------------------------- */
-
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
-  position: relative;
-}
-
-main,
-#main-content,
-article {
-  max-width: 100%;
-  box-sizing: border-box;
-  overflow-x: clip;
-}
-
-/* Code blocks: strictly self-contained horizontal scrolling */
-pre {
-  max-width: 100% !important;
-  width: 100% !important;
-  overflow-x: auto !important;
-  overflow-y: hidden;
-  -webkit-overflow-scrolling: touch;
-  box-sizing: border-box;
-  margin-left: 0 !important;
-  margin-right: 0 !important;
-}
-
-pre code {
-  white-space: pre !important;
-  word-break: normal !important;
-  overflow-wrap: normal !important;
-  display: block;
-}
-
-/* Tables: horizontal scroll container on mobile */
-table {
-  display: block;
-  width: 100% !important;
-  max-width: 100% !important;
-  overflow-x: auto !important;
-  -webkit-overflow-scrolling: touch;
-  border-collapse: collapse;
-}
-
-/* KaTeX Formulas: scrollable on overflow */
-.katex-display {
-  max-width: 100% !important;
-  overflow-x: auto !important;
-  overflow-y: hidden;
-  -webkit-overflow-scrolling: touch;
-  padding: 0.5rem 0;
-}
-
-/* Responsive Media */
-img,
-svg,
-video,
-iframe {
-  max-width: 100%;
-  height: auto;
-}
-
-/* --------------------------------------------------------------------------
-   2. Responsive, Balanced Headings (No Oversized Titles, No Horizontal Overflow)
+   1. Proportional, Balanced Headings (Compact H1, No Overflow)
    -------------------------------------------------------------------------- */
 
 h1, h2, h3, h4, h5, h6 {
@@ -79,7 +13,7 @@ h1, h2, h3, h4, h5, h6 {
   overflow-wrap: break-word;
 }
 
-/* Main Post Title (H1) */
+/* Post Title (H1) */
 h1,
 article #heading h1,
 main > h1 {
@@ -104,7 +38,7 @@ article h3 {
   margin: 1.75rem 0 0.65rem 0;
 }
 
-/* Mobile Headings Optimization */
+/* Mobile Headings */
 @media (max-width: 640px) {
   h1,
   article #heading h1,
@@ -129,10 +63,10 @@ article h3 {
 }
 
 /* --------------------------------------------------------------------------
-   3. Modern Clean Links
+   2. Modern Clean Links
    -------------------------------------------------------------------------- */
 
-/* Base links: remove clunky dotted/wavy default decorations */
+/* Base links: clean, no clunky dotted/wavy default decorations */
 a {
   color: var(--accent-color);
   text-decoration: none;
@@ -205,4 +139,20 @@ h1 a, h2 a, h3 a, h4 a, h5 a, h6 a,
 #toc a:hover,
 #sidebar a:hover {
   color: var(--accent-color);
+}
+
+/* --------------------------------------------------------------------------
+   3. Code Blocks & Tables Safe Contained Scroll
+   -------------------------------------------------------------------------- */
+
+pre {
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+table {
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
