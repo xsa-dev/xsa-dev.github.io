@@ -494,20 +494,20 @@ body.zoom-lock-scroll {
 
 /* Collapsed State: labels are 0 width */
 #site-nav.dock-nav-wrapper .dock-label {
-  display: inline-block !important;
-  max-width: 0px !important;
-  opacity: 0 !important;
-  overflow: hidden !important;
-  white-space: nowrap !important;
-  transform: translateX(-4px) !important;
-  transition: max-width 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease, transform 0.2s ease, margin 0.2s ease !important;
-  margin-left: 0 !important;
+  display: inline-block;
+  max-width: 0;
+  opacity: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  transform: translateX(-4px);
+  transition: max-width 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease, transform 0.2s ease, margin 0.2s ease;
+  margin-left: 0;
 }
 
 /* Expanded State or Item Hover: labels smoothly expand */
-#site-nav.dock-nav-wrapper nav.dock-nav.dock-expanded .dock-label,
-#site-nav.dock-nav-wrapper li.dock-item:hover .dock-label {
-  max-width: 120px !important;
+#site-nav.dock-nav-wrapper .dock-expanded .dock-label,
+#site-nav.dock-nav-wrapper .dock-item:hover .dock-label {
+  max-width: 140px !important;
   opacity: 1 !important;
   transform: translateX(0) !important;
   margin-left: 0.45rem !important;
