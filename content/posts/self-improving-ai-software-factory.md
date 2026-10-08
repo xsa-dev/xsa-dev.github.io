@@ -24,38 +24,33 @@ toc = true
 
 В основе промышленной фабрики кода лежит строгое разделение между уровнем управления (**Control Plane**) и изолированными вычислительными узлами (**Worker Pool**):
 
-![Архитектура распределенной AI Software Factory](/images/ai-software-factory-arch.png)
+```mermaid
+flowchart TD
+    subgraph Triggers ["⚡ Входной поток задач (Triggers)"]
+        T1["Webhooks / CI / Jira / CLI"]
+    end
 
-```text
-  [ Webhooks / CI / Jira / CLI ]
-                │
-                ▼
-┌────────────────────────────────────────────────────────┐
-│               CONTROL PLANE (Machinist)                │
-│  • Task Queue & Global State (SQLite / WAL)            │
-│  • Centralized Prompts & Skills Catalog                │
-│  • Web Dashboard & Execution Traces                    │
-│  • SSH Tunnel Gateway                                  │
-└───────────────────────────┬────────────────────────────┘
-                            │ Dispatches jobs over SSH
-                            ▼
-┌────────────────────────────────────────────────────────┐
-│            WORKER POOL (Cloud VMs / Hetzner)           │
-│                                                        │
-│   ┌────────────────────────────────────────────────┐   │
-│   │ Foreman Agent (Планирование и декомпозиция)    │   │
-│   └───────────────────────┬────────────────────────┘   │
-│                           │ Делегирование задач        │
-│                           ▼                            │
-│   ┌────────────────────────────────────────────────┐   │
-│   │ Sub-Agents (Codex / Claude Coder / Tester)     │   │
-│   └───────────────────────┬────────────────────────┘   │
-│                           │ Код, патчи и артефакты     │
-│                           ▼                            │
-│   ┌────────────────────────────────────────────────┐   │
-│   │ Audit Agent + Deterministic Evals (Python/CLI) │   │
-│   └────────────────────────────────────────────────┘   │
-└────────────────────────────────────────────────────────┘
+    Triggers -->|Новый тикет / запрос| CP
+
+    subgraph CP ["🎛️ CONTROL PLANE (Machinist)"]
+        direction TB
+        DB[("Task Queue & Global State<br/>(SQLite / WAL)")]
+        Catalog["Prompts & Skills Catalog"]
+        Dashboard["Web Dashboard & Traces"]
+        SSHGate["SSH Tunnel Gateway"]
+    end
+
+    CP ==>|🔒 Dispatches jobs over SSH tunnel| WP
+
+    subgraph WP ["☁️ WORKER POOL (Hetzner / Cloud VMs)"]
+        direction TB
+        Foreman["👑 1. Foreman Agent<br/>(Планирование и декомпозиция)"]
+        SubAgents["🤖 2. Sub-Agents Swarm<br/>(Claude Coder / Codex / PyTest)"]
+        Audit["🛡️ 3. Audit Agent + Deterministic Evals<br/>(mypy, pytest, 3-Agent Review)"]
+
+        Foreman -->|Делегирование подзадач| SubAgents
+        SubAgents -->|Код, патчи и артефакты| Audit
+    end
 ```
 
 ### Преимущества такой топологии:
