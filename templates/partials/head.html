@@ -114,7 +114,7 @@
 
 	{%- if scripts | length > 0 %}
 		{%- for script in scripts %}
-			<script type="text/javascript" defer {% if script == "count.js" %}data-goatcounter="https://{{ config.extra.goatcounter.user }}.{{ config.extra.goatcounter?.host | default(value='goatcounter.com') }}/count"{% endif %} src="{{ get_url(path=script) | safe }}"></script>
+			<script type="text/javascript" defer {% if script == "count.js" %}data-goatcounter="https://{{ config.extra.goatcounter.user }}.{{ config.extra.goatcounter?.host | default(value='goatcounter.com') }}/count"{% endif %} src="{{ get_url(path=script) | safe }}?v={{ now() | date(format='%s') }}"></script>
 		{%- endfor %}
 	{%- endif %}
 
