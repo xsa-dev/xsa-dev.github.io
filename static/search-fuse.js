@@ -1,6 +1,6 @@
 /**
  * High-Performance Search Engine (Fuse.js)
- * Preloads search index, supports fuzzy matching, transliteration, input debounce, and empty states.
+ * Preloads search index, supports fuzzy matching, bilingual transliteration (RU <-> EN), input debounce, and empty states.
  */
 (() => {
   let searchSetup = false;
@@ -24,7 +24,7 @@
           includeMatches: true,
           ignoreLocation: true,
           findAllMatches: true,
-          threshold: 0.35,
+          threshold: 0.38,
           minMatchCharLength: 2,
           keys: [
             { name: "title", weight: 4 },
@@ -45,12 +45,12 @@
     return loadPromise;
   }
 
-  // Preload index in idle time
+  // Preload index in background
   if (typeof window !== "undefined") {
     if ("requestIdleCallback" in window) {
       window.requestIdleCallback(() => getFuse());
     } else {
-      setTimeout(getFuse, 1000);
+      setTimeout(getFuse, 800);
     }
   }
 
@@ -77,7 +77,6 @@
     }
   }
 
-  // Expose globally for nav controllers
   window.toggleSearch = toggleSearch;
 
   function initSearch() {
@@ -93,9 +92,20 @@
 
     let debounceTimer = null;
 
+    // Transliteration helper for mixed RU/EN terms
+    function transliterateRuToEn(text) {
+      const map = {
+        'а': 'a', 'б': 'b', 'в': 'v', 'г': 'g', 'д': 'd', 'е': 'e', 'ё': 'e', 'ж': 'zh',
+        'з': 'z', 'и': 'i', 'й': 'y', 'к': 'k', 'л': 'l', 'м': 'm', 'н': 'n', 'о': 'o',
+        'п': 'p', 'р': 'r', 'с': 's', 'т': 't', 'у': 'u', 'ф': 'f', 'х': 'h', 'ц': 'ts',
+        'ч': 'ch', 'ш': 'sh', 'щ': 'sch', 'ъ': '', 'ы': 'y', 'ь': '', 'э': 'e', 'ю': 'yu', 'я': 'ya'
+      };
+      return text.toLowerCase().split('').map(c => map[c] || c).join('');
+    }
+
     async function performSearch() {
-      const query = searchBar.value.trim();
-      if (!query) {
+      const rawQuery = searchBar.value.trim();
+      if (!rawQuery) {
         searchResults.innerHTML = "";
         searchResults.style.display = "none";
         return;
@@ -108,12 +118,25 @@
         return;
       }
 
-      const results = fuse.search(query, { limit: MAX_ITEMS });
+      // Query + Transliterated Query
+      const queryRuEn = transliterateRuToEn(rawQuery);
+      
+      let results = fuse.search(rawQuery, { limit: MAX_ITEMS });
+      if (queryRuEn !== rawQuery.toLowerCase()) {
+        const altResults = fuse.search(queryRuEn, { limit: MAX_ITEMS });
+        const seenUrls = new Set(results.map(r => r.item.url));
+        for (const alt of altResults) {
+          if (!seenUrls.has(alt.item.url)) {
+            results.push(alt);
+            seenUrls.add(alt.item.url);
+          }
+        }
+      }
 
       if (results.length === 0) {
         searchResults.innerHTML = `
           <div class="search-result item search-empty-state">
-            <span class="search-empty-text">Ничего не найдено по запросу «<strong>${escapeHtml(query)}</strong>»</span>
+            <span class="search-empty-text">Ничего не найдено по запросу «<strong>${escapeHtml(rawQuery)}</strong>»</span>
           </div>
         `;
         searchResults.style.display = "flex";
@@ -121,8 +144,8 @@
       }
 
       let html = "";
-      for (const res of results) {
-        html += makeResultCard(res, query);
+      for (const res of results.slice(0, MAX_ITEMS)) {
+        html += makeResultCard(res, rawQuery);
       }
       searchResults.innerHTML = html;
       searchResults.style.display = "flex";
@@ -159,7 +182,7 @@
 
             output += `<span>${prefix}<strong>${matchText}</strong>${suffix}</span>`;
           }
-          break; // Show snippet from highest weighted content match
+          break;
         }
       } else if (item.description) {
         output += `<span>${escapeHtml(item.description.slice(0, 120))}…</span>`;
@@ -169,16 +192,15 @@
       return output;
     }
 
-    // Bind both input and keyup for instant, mobile-safe response
     const handleInput = () => {
       clearTimeout(debounceTimer);
-      debounceTimer = setTimeout(performSearch, 70);
+      debounceTimer = setTimeout(performSearch, 60);
     };
 
     searchBar.addEventListener("input", handleInput);
     searchBar.addEventListener("keyup", handleInput);
 
-    // Global keyboard shortcut '/'
+    // Shortcut '/'
     document.addEventListener("keydown", (e) => {
       if (e.key === "/" && document.activeElement !== searchBar && document.activeElement?.tagName !== "INPUT" && document.activeElement?.tagName !== "TEXTAREA") {
         e.preventDefault();
