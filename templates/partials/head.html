@@ -81,6 +81,10 @@
 		{%- set scripts = [...scripts, "katex.min.js", "auto-render.min.js", "katex-init.js"] %}
 	{%- endif %}
 
+	{%- if page?.extra?.mermaid or section?.extra?.mermaid or config.extra?.mermaid %}
+		{%- set scripts = [...scripts, "mermaid-init.js"] %}
+	{%- endif %}
+
 	{%- if config.build_search_index %}
 		{%- if config.search.index_format == "elasticlunr_json" -%}
 			{%- set scripts = [...scripts, "elasticlunr.min.js", "search-elasticlunr.js"] %}
