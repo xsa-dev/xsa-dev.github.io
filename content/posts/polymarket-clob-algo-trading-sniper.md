@@ -35,14 +35,14 @@ flowchart TD
 
     subgraph S2 ["🎯 2. Стратегический движок (Strike Sniper Logic)"]
         direction TB
-        G1["Polymarket Gamma API: Strike Price (K)"]
-        G2{"Сравнение: P_ref > K + Spread_safe?"}
+        G1["Polymarket Gamma API: Strike Price K"]
+        G2["Сравнение: P_ref > K + Spread_safe?"]
         G3["Расчет размера позиции (Share Sizing)"]
         G1 --> G2
-        G2 -->|Да (Вероятность YES ↑)| G3
+        G2 -->|Да, вероятность YES растет| G3
     end
 
-    S2 ==>|Taker Order Intent (EIP-712)| S3
+    S2 ==>|Taker Order Intent - EIP-712| S3
 
     subgraph S3 ["🛡️ 3. Исполнение (Polymarket CLOB API)"]
         direction TB
