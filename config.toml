@@ -34,6 +34,7 @@ index_format = "fuse_json"
 default_theme = "dark"
 accent_color = "#2563eb"
 accent_color_dark = "#38bdf8"
+styles = ["custom.css"]
 show_copy_button = true
 show_reading_time = true
 show_share_button = true

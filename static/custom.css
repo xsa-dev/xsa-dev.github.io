@@ -1,0 +1,78 @@
+/* ==========================================================================
+   Modern Clean Link & Typography Styling for Notes & Insights
+   ========================================================================== */
+
+/* Base links: remove clunky dotted/wavy default decorations */
+a {
+  color: var(--accent-color);
+  text-decoration: none;
+  transition: color 0.2s ease, text-decoration-color 0.2s ease, text-underline-offset 0.2s ease;
+}
+
+/* Article prose links: subtle, elegant underline */
+article p a,
+article li a,
+article blockquote a,
+article td a,
+main > p a,
+main > ul a:not(.tag),
+main > ol a {
+  text-decoration: underline;
+  text-decoration-style: solid;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 3.5px;
+  text-decoration-color: rgba(56, 189, 248, 0.38);
+}
+
+/* Light mode underline opacity */
+[data-theme="light"] article p a,
+[data-theme="light"] article li a,
+[data-theme="light"] article blockquote a,
+[data-theme="light"] article td a,
+[data-theme="light"] main > p a {
+  text-decoration-color: rgba(37, 99, 235, 0.35);
+}
+
+/* Hover state: smooth accent glow */
+article p a:hover,
+article li a:hover,
+article blockquote a:hover,
+article td a:hover,
+main > p a:hover,
+main > ul a:not(.tag):hover,
+main > ol a:hover {
+  text-decoration-style: solid !important;
+  text-decoration-color: var(--accent-color) !important;
+  text-underline-offset: 4.5px;
+}
+
+/* Headings, article cards, navigation, tags, badges: strictly clean without underline */
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a,
+#article-list article h3 a,
+#article-list article a,
+.tags a,
+.tag,
+#site-nav a,
+#site-footer a,
+#post-nav a,
+#buttons-container a,
+.badge {
+  text-decoration: none !important;
+}
+
+/* Card title hover interaction */
+#article-list article:hover h3 a {
+  color: var(--accent-color);
+}
+
+/* Table of Contents links */
+#toc a,
+#sidebar a {
+  text-decoration: none !important;
+  transition: color 0.15s ease;
+}
+
+#toc a:hover,
+#sidebar a:hover {
+  color: var(--accent-color);
+}
