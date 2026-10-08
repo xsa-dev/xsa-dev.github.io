@@ -49,11 +49,11 @@ flowchart TD
 
 Решение — переход к **стационарным z-score инвариантам**:
 
-$$z_t = \frac{p_t - \mu_{\text{SMA}(k)}}{\sigma_{\text{StdDev}(k)}}$$
+$$z\_t = \frac{p\_t - \mu\_{\text{SMA}(k)}}{\sigma\_{\text{StdDev}(k)}}$$
 
 Вектор состояния описывает не *«где находится цена»*, а *«форму и аномалию движения»* относительно локальной волатильности. Далее непрерывные значения квантуются в дискретные интервалы (бины). Например:
-* $z_{\text{RSI}} \in \{\text{Oversold}, \text{Neutral}, \text{Overbought}\}$
-* $z_{\text{Spread}} \in \{\text{Tight}, \text{Normal}, \text{Wide}\}$
+* $z\_{\text{RSI}} \in \{\text{Oversold}, \text{Neutral}, \text{Overbought}\}$
+* $z\_{\text{Spread}} \in \{\text{Tight}, \text{Normal}, \text{Wide}\}$
 
 Благодаря квантованию пространство состояний сжимается с бесконечности до сотен тысяч обозримых ситуаций, которые накапливают статистический опыт.
 
@@ -63,7 +63,7 @@ $$z_t = \frac{p_t - \mu_{\text{SMA}(k)}}{\sigma_{\text{StdDev}(k)}}$$
 
 Обновление оценок ценности действия строится по уравнению Беллмана:
 
-$$Q(s, a) \leftarrow Q(s, a) + \alpha \cdot \left[ r + \gamma \cdot \max_{a'} Q(s', a') - Q(s, a) \right]$$
+$$Q(s, a) \leftarrow Q(s, a) + \alpha \cdot \left[ r + \gamma \cdot \max\_{a'} Q(s', a') - Q(s, a) \right]$$
 
 где:
 * $\alpha$ — скорость обучения (learning rate);

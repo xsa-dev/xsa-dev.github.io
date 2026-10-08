@@ -28,3 +28,10 @@ fn main() {
 > Простота — необходимое условие надежности. — *Edsger W. Dijkstra*
 
 Блог поддерживает автоматическую генерацию RSS/Atom фидов, теги и адаптивную темную тему.
+
+---
+
+## Первоисточники и материалы
+* **Официальная документация Zola:** [getzola.org](https://www.getzola.org/)
+* **Репозиторий блога и темы:** [xsa-dev/xsa-dev.github.io (GitHub)](https://github.com/xsa-dev/xsa-dev.github.io)
+* **Инженерные наработки:** [github.com/xsa-dev](https://github.com/xsa-dev)
