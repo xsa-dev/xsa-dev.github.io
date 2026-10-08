@@ -24,6 +24,8 @@ toc = true
 
 В основе промышленной фабрики кода лежит строгое разделение между уровнем управления (**Control Plane**) и изолированными вычислительными узлами (**Worker Pool**):
 
+![Архитектура распределенной AI Software Factory](/images/ai-software-factory-arch.png)
+
 ```text
   [ Webhooks / CI / Jira / CLI ]
                 │
