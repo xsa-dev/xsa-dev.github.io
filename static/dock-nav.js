@@ -105,6 +105,15 @@ document.addEventListener('DOMContentLoaded', () => {
     
     document.documentElement.setAttribute('data-theme', nextTheme);
     localStorage.setItem('theme', nextTheme);
+
+    // Sync Giscus comments theme
+    const giscusFrame = document.querySelector('iframe.giscus-frame');
+    if (giscusFrame) {
+      giscusFrame.contentWindow.postMessage(
+        { giscus: { setConfig: { theme: nextTheme === 'dark' ? 'dark_dimmed' : 'light' } } },
+        'https://giscus.app'
+      );
+    }
   }
 
   if (quickThemeToggle) quickThemeToggle.addEventListener('click', toggleTheme);

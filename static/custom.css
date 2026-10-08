@@ -376,7 +376,7 @@ body.zoom-lock-scroll {
 }
 
 /* --------------------------------------------------------------------------
-   6. Modern Hybrid Navigation & Slide-Out Drawer (Linear / Apple style)
+   6. Modern Hybrid Navigation & Slide-Out Drawer (Theme-Adaptive)
    -------------------------------------------------------------------------- */
 
 /* Prevent body scroll when drawer is open */
@@ -405,19 +405,18 @@ body.nav-drawer-locked {
   display: flex !important;
   align-items: center !important;
   justify-content: space-between !important;
-  background: rgba(15, 23, 42, 0.88) !important;
+  background: var(--glass-bg) !important;
   backdrop-filter: blur(20px) !important;
   -webkit-backdrop-filter: blur(20px) !important;
-  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border: 1px solid var(--fg-muted-2) !important;
   border-radius: 9999px !important;
   padding: 0.4rem 0.65rem 0.4rem 0.9rem !important;
-  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.5), 0 0 20px rgba(56, 189, 248, 0.08) !important;
+  box-shadow: var(--shadow-glass), var(--edge-highlight) !important;
   transition: border-color 0.25s ease, box-shadow 0.25s ease !important;
 }
 
 .nav-bar-container:hover {
-  border-color: rgba(56, 189, 248, 0.35) !important;
-  box-shadow: 0 12px 35px -5px rgba(0, 0, 0, 0.6), 0 0 25px rgba(56, 189, 248, 0.16) !important;
+  border-color: var(--accent-color) !important;
 }
 
 /* Brand Link */
@@ -426,7 +425,7 @@ body.nav-drawer-locked {
   align-items: center !important;
   gap: 0.5rem !important;
   text-decoration: none !important;
-  color: #f8fafc !important;
+  color: var(--fg-color) !important;
   font-weight: 700 !important;
   font-size: 14.5px !important;
   letter-spacing: -0.01em !important;
@@ -434,7 +433,7 @@ body.nav-drawer-locked {
 }
 
 .nav-brand-pill:hover {
-  opacity: 0.9 !important;
+  opacity: 0.85 !important;
   transform: translateY(-1px) !important;
 }
 
@@ -463,18 +462,18 @@ body.nav-drawer-locked {
   width: 36px !important;
   height: 36px !important;
   border-radius: 50% !important;
-  border: 1px solid rgba(255, 255, 255, 0.08) !important;
-  background: rgba(255, 255, 255, 0.04) !important;
-  color: #94a3b8 !important;
+  border: 1px solid var(--fg-muted-2) !important;
+  background: var(--fg-muted-1) !important;
+  color: var(--fg-muted-5) !important;
   cursor: pointer !important;
   transition: all 0.2s ease !important;
   padding: 0 !important;
 }
 
 .nav-icon-btn:hover {
-  background: rgba(255, 255, 255, 0.1) !important;
-  color: #f8fafc !important;
-  border-color: rgba(255, 255, 255, 0.18) !important;
+  background: var(--fg-muted-2) !important;
+  color: var(--fg-color) !important;
+  border-color: var(--fg-muted-3) !important;
   transform: scale(1.06) !important;
 }
 
@@ -490,9 +489,9 @@ body.nav-drawer-locked {
   gap: 0.45rem !important;
   padding: 0.38rem 0.85rem !important;
   border-radius: 9999px !important;
-  background: rgba(56, 189, 248, 0.12) !important;
-  border: 1px solid rgba(56, 189, 248, 0.28) !important;
-  color: #38bdf8 !important;
+  background: var(--accent-color-alpha) !important;
+  border: 1px solid var(--accent-color) !important;
+  color: var(--accent-color) !important;
   font-size: 13.5px !important;
   font-weight: 600 !important;
   font-family: inherit !important;
@@ -501,10 +500,9 @@ body.nav-drawer-locked {
 }
 
 .nav-menu-toggle-btn:hover {
-  background: rgba(56, 189, 248, 0.24) !important;
-  color: #ffffff !important;
-  border-color: rgba(56, 189, 248, 0.5) !important;
-  box-shadow: 0 0 15px rgba(56, 189, 248, 0.2) !important;
+  background: var(--accent-color) !important;
+  color: var(--contrast-color, #ffffff) !important;
+  box-shadow: 0 0 15px var(--accent-color-alpha) !important;
 }
 
 .menu-hamburger-svg {
@@ -513,12 +511,12 @@ body.nav-drawer-locked {
 }
 
 /* --------------------------------------------------------------------------
-   7. Slide-Out Drawer Navigation Panel
+   7. Slide-Out Drawer Navigation Panel (Theme-Adaptive)
    -------------------------------------------------------------------------- */
 .drawer-backdrop {
   position: fixed !important;
   inset: 0 !important;
-  background: rgba(3, 7, 18, 0.65) !important;
+  background: rgba(0, 0, 0, 0.5) !important;
   backdrop-filter: blur(8px) !important;
   -webkit-backdrop-filter: blur(8px) !important;
   z-index: 9998 !important;
@@ -541,11 +539,11 @@ body.nav-drawer-locked {
   bottom: 0 !important;
   width: min(360px, 88vw) !important;
   height: 100vh !important;
-  background: rgba(11, 17, 32, 0.96) !important;
+  background: var(--bg-color) !important;
   backdrop-filter: blur(28px) !important;
   -webkit-backdrop-filter: blur(28px) !important;
-  border-left: 1px solid rgba(255, 255, 255, 0.12) !important;
-  box-shadow: -15px 0 50px rgba(0, 0, 0, 0.8) !important;
+  border-left: 1px solid var(--fg-muted-2) !important;
+  box-shadow: -15px 0 50px rgba(0, 0, 0, 0.4) !important;
   z-index: 9999 !important;
   transform: translateX(100%);
   transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1) !important;
@@ -563,7 +561,7 @@ body.nav-drawer-locked {
   align-items: center !important;
   justify-content: space-between !important;
   padding: 1.25rem 1.25rem 1rem !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-bottom: 1px solid var(--fg-muted-2) !important;
 }
 
 .drawer-brand {
@@ -577,7 +575,7 @@ body.nav-drawer-locked {
 }
 
 .drawer-brand-name {
-  color: #f8fafc !important;
+  color: var(--fg-color) !important;
   font-weight: 700 !important;
   font-size: 15px !important;
 }
@@ -589,9 +587,9 @@ body.nav-drawer-locked {
   width: 32px !important;
   height: 32px !important;
   border-radius: 50% !important;
-  background: rgba(255, 255, 255, 0.06) !important;
-  border: 1px solid rgba(255, 255, 255, 0.1) !important;
-  color: #94a3b8 !important;
+  background: var(--fg-muted-1) !important;
+  border: 1px solid var(--fg-muted-2) !important;
+  color: var(--fg-muted-5) !important;
   cursor: pointer !important;
   transition: all 0.2s ease !important;
 }
@@ -619,7 +617,7 @@ body.nav-drawer-locked {
 }
 
 .drawer-group-title {
-  color: #64748b !important;
+  color: var(--fg-muted-4) !important;
   font-size: 11.5px !important;
   font-weight: 700 !important;
   text-transform: uppercase !important;
@@ -643,20 +641,20 @@ body.nav-drawer-locked {
   padding: 0.7rem 0.85rem !important;
   border-radius: 12px !important;
   text-decoration: none !important;
-  background: rgba(255, 255, 255, 0.02) !important;
+  background: var(--fg-muted-1) !important;
   border: 1px solid transparent !important;
   transition: all 0.2s ease !important;
 }
 
 .drawer-row-link:hover {
-  background: rgba(255, 255, 255, 0.06) !important;
-  border-color: rgba(255, 255, 255, 0.08) !important;
+  background: var(--fg-muted-2) !important;
+  border-color: var(--fg-muted-3) !important;
   transform: translateX(3px) !important;
 }
 
 .drawer-row-link.active {
-  background: rgba(56, 189, 248, 0.12) !important;
-  border-color: rgba(56, 189, 248, 0.28) !important;
+  background: var(--accent-color-alpha) !important;
+  border-color: var(--accent-color) !important;
 }
 
 .drawer-row-icon {
@@ -666,19 +664,19 @@ body.nav-drawer-locked {
   width: 36px !important;
   height: 36px !important;
   border-radius: 10px !important;
-  background: rgba(255, 255, 255, 0.05) !important;
-  color: #94a3b8 !important;
+  background: var(--fg-muted-2) !important;
+  color: var(--fg-muted-5) !important;
   flex-shrink: 0 !important;
 }
 
 .drawer-row-link:hover .drawer-row-icon {
-  color: #38bdf8 !important;
-  background: rgba(56, 189, 248, 0.15) !important;
+  color: var(--accent-color) !important;
+  background: var(--accent-color-alpha) !important;
 }
 
 .drawer-row-link.active .drawer-row-icon {
-  background: rgba(56, 189, 248, 0.22) !important;
-  color: #38bdf8 !important;
+  background: var(--accent-color) !important;
+  color: var(--contrast-color, #ffffff) !important;
 }
 
 .drawer-row-icon svg {
@@ -693,17 +691,17 @@ body.nav-drawer-locked {
 }
 
 .drawer-row-title {
-  color: #f1f5f9 !important;
+  color: var(--fg-color) !important;
   font-size: 14.5px !important;
   font-weight: 600 !important;
 }
 
 .drawer-row-link.active .drawer-row-title {
-  color: #38bdf8 !important;
+  color: var(--accent-color) !important;
 }
 
 .drawer-row-caption {
-  color: #64748b !important;
+  color: var(--fg-muted-4) !important;
   font-size: 12px !important;
 }
 
@@ -721,9 +719,9 @@ body.nav-drawer-locked {
   gap: 0.5rem !important;
   padding: 0.75rem 0.5rem !important;
   border-radius: 10px !important;
-  background: rgba(255, 255, 255, 0.03) !important;
-  border: 1px solid rgba(255, 255, 255, 0.08) !important;
-  color: #cbd5e1 !important;
+  background: var(--fg-muted-1) !important;
+  border: 1px solid var(--fg-muted-2) !important;
+  color: var(--fg-color) !important;
   font-size: 13px !important;
   font-weight: 500 !important;
   text-decoration: none !important;
@@ -732,23 +730,23 @@ body.nav-drawer-locked {
 }
 
 .drawer-action-card:hover {
-  background: rgba(56, 189, 248, 0.12) !important;
-  border-color: rgba(56, 189, 248, 0.3) !important;
-  color: #ffffff !important;
+  background: var(--accent-color-alpha) !important;
+  border-color: var(--accent-color) !important;
+  color: var(--accent-color) !important;
 }
 
 .drawer-action-card svg {
   width: 16px !important;
   height: 16px !important;
-  color: #94a3b8 !important;
+  color: var(--fg-muted-5) !important;
 }
 
 .drawer-action-card:hover svg {
-  color: #38bdf8 !important;
+  color: var(--accent-color) !important;
 }
 
 /* --------------------------------------------------------------------------
-   8. Clean Search Modal Overlay
+   8. Clean Search Modal Overlay (Theme-Adaptive)
    -------------------------------------------------------------------------- */
 .site-search-modal {
   position: fixed !important;
@@ -773,7 +771,7 @@ body.nav-drawer-locked {
 .search-modal-backdrop {
   position: absolute !important;
   inset: 0 !important;
-  background: rgba(3, 7, 18, 0.7) !important;
+  background: rgba(0, 0, 0, 0.6) !important;
   backdrop-filter: blur(10px) !important;
   -webkit-backdrop-filter: blur(10px) !important;
 }
@@ -781,10 +779,10 @@ body.nav-drawer-locked {
 .search-modal-card {
   position: relative !important;
   width: min(580px, 92vw) !important;
-  background: rgba(15, 23, 42, 0.96) !important;
-  border: 1px solid rgba(56, 189, 248, 0.3) !important;
+  background: var(--bg-color) !important;
+  border: 1px solid var(--accent-color) !important;
   border-radius: 16px !important;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8), 0 0 30px rgba(56, 189, 248, 0.15) !important;
+  box-shadow: var(--shadow-glass), 0 25px 50px -12px rgba(0, 0, 0, 0.5) !important;
   overflow: hidden !important;
   z-index: 1 !important;
   display: flex !important;
@@ -796,14 +794,14 @@ body.nav-drawer-locked {
   display: flex !important;
   align-items: center !important;
   padding: 0.85rem 1rem !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-bottom: 1px solid var(--fg-muted-2) !important;
   gap: 0.75rem !important;
 }
 
 .search-icon {
   width: 18px !important;
   height: 18px !important;
-  color: #38bdf8 !important;
+  color: var(--accent-color) !important;
   flex-shrink: 0 !important;
 }
 
@@ -812,7 +810,7 @@ body.nav-drawer-locked {
   background: transparent !important;
   border: none !important;
   outline: none !important;
-  color: #f8fafc !important;
+  color: var(--fg-color) !important;
   font-size: 15px !important;
   font-family: inherit !important;
 }
@@ -820,7 +818,7 @@ body.nav-drawer-locked {
 .search-modal-close {
   background: transparent !important;
   border: none !important;
-  color: #64748b !important;
+  color: var(--fg-muted-4) !important;
   font-size: 16px !important;
   cursor: pointer !important;
   padding: 0.25rem 0.5rem !important;
@@ -829,8 +827,8 @@ body.nav-drawer-locked {
 }
 
 .search-modal-close:hover {
-  color: #f8fafc !important;
-  background: rgba(255, 255, 255, 0.08) !important;
+  color: var(--fg-color) !important;
+  background: var(--fg-muted-2) !important;
 }
 
 #search-results-container {
