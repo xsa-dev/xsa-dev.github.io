@@ -3,7 +3,80 @@
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
-   1. Proportional, Balanced Headings (Compact H1, No Overflow)
+   1. Grid / Flex Overflow Protection (Prevents Mobile Viewport Blowout)
+   -------------------------------------------------------------------------- */
+
+/* In CSS Grid/Flex, min-width defaults to auto, allowing code blocks and long
+   lines to expand the entire page width. Setting min-width: 0 keeps children
+   contained strictly within the screen boundary. */
+body,
+main,
+article,
+#main-content,
+.post-nav-item,
+#post-nav,
+#site-nav,
+#site-footer,
+#article-list {
+  min-width: 0 !important;
+}
+
+/* Code blocks & Pre: strictly contained within container with horizontal scroll */
+pre,
+pre.giallo,
+pre.z-code {
+  max-width: 100% !important;
+  width: 100% !important;
+  overflow-x: auto !important;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  box-sizing: border-box !important;
+}
+
+pre code {
+  white-space: pre !important;
+  word-break: normal !important;
+  overflow-wrap: normal !important;
+}
+
+/* Post navigation link wrapping on mobile (replaces nowrap that stretched page) */
+#post-nav .post-title {
+  max-width: 100% !important;
+  white-space: normal !important;
+  word-break: break-word !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+/* Tables: horizontal scrollable container */
+table {
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch;
+  border-collapse: collapse;
+}
+
+/* KaTeX Formulas: contained scrolling */
+.katex-display {
+  max-width: 100% !important;
+  overflow-x: auto !important;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Responsive Media */
+img,
+svg,
+video,
+iframe {
+  max-width: 100%;
+  height: auto;
+}
+
+/* --------------------------------------------------------------------------
+   2. Proportional, Balanced Headings (Compact H1, No Overflow)
    -------------------------------------------------------------------------- */
 
 h1, h2, h3, h4, h5, h6 {
@@ -63,7 +136,7 @@ article h3 {
 }
 
 /* --------------------------------------------------------------------------
-   2. Modern Clean Links
+   3. Modern Clean Links
    -------------------------------------------------------------------------- */
 
 /* Base links: clean, no clunky dotted/wavy default decorations */
@@ -139,20 +212,4 @@ h1 a, h2 a, h3 a, h4 a, h5 a, h6 a,
 #toc a:hover,
 #sidebar a:hover {
   color: var(--accent-color);
-}
-
-/* --------------------------------------------------------------------------
-   3. Code Blocks & Tables Safe Contained Scroll
-   -------------------------------------------------------------------------- */
-
-pre {
-  max-width: 100%;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-}
-
-table {
-  max-width: 100%;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
 }
