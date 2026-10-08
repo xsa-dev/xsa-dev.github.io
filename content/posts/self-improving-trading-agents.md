@@ -32,20 +32,40 @@ tags = ["ai-agents", "algo-trading", "architecture", "mlops"]
 
 Если отбросить маркетинговую шелуху, сама идея разделения обязанностей между специализированными агентами вполне жизнеспособна. Но архитектура должна строиться по принципу **изолированных контуров и жестких шлюзов (Approval Gates)**:
 
-```text
-[ Orchestrator (Hermes Agent) ]
-   ├── Управление инфраструктурой (deploy, cron, health-checks)
-   ├── Сбор телеметрии и ведение Append-Only Ledger
-   │
-[ Strategy Engine (Исполнение) ]
-   ├── Детерминированный движок (Rust / Python / Freqtrade / Jesse)
-   ├── Строгий Risk Management (Max Drawdown, Position Sizing)
-   │
-[ Out-of-Sample Tuner (Аналитик) ]
-   ├── Запуск бэктестов на независимой OOS-выборке (со сдвигом времени)
-   ├── Формирование отчета с гипотезами и метриками (Sharpe, Profit Factor)
-   │
-[ Human Approval Gate ] ─── Ручной апрув ───> Применение в Live
+```mermaid
+flowchart TD
+    subgraph Orch ["🎛️ 1. Orchestrator (Hermes Agent)"]
+        direction TB
+        O1["Управление инфраструктурой (deploy, cron, health)"]
+        O2["Сбор телеметрии и Append-Only Ledger"]
+        O1 --- O2
+    end
+
+    subgraph Exec ["⚡ 2. Strategy Engine (Исполнение)"]
+        direction TB
+        E1["Детерминированный движок (Rust / Python / Freqtrade)"]
+        E2["Строгий Risk Management (Max Drawdown, Sizing)"]
+        E1 --- E2
+    end
+
+    subgraph Tuner ["📊 3. Out-of-Sample Tuner (Аналитик)"]
+        direction TB
+        T1["Бэктесты на независимой OOS-выборке со сдвигом"]
+        T2["Отчет с гипотезами и метриками (Sharpe, Profit Factor)"]
+        T1 --- T2
+    end
+
+    subgraph Gate ["🛡️ 4. Human Approval Gate"]
+        direction TB
+        G1["Ручной аудит гипотезы разработчиком"]
+        G2["Применение флага live: true"]
+        G1 ==> G2
+    end
+
+    Orch --> Exec
+    Orch --> Tuner
+    Tuner ==>|Предложение оптимизации| Gate
+    Gate ==>|Апрув параметров| Exec
 ```
 
 ---

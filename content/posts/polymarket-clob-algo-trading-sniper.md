@@ -22,29 +22,35 @@ $$P(\text{Event}) \in [0, 1]$$
 
 Снайпинг предсказательных рынков строится на сопоставлении двух источников данных:
 
-```text
-┌────────────────────────────────────────────────────────┐
-│ 1. БЫСТРЫЙ ИСТОЧНИК (Hyperliquid L2 WebSocket)         │
-│    • Real-time спот/перп котировки (BTC, ETH, SOL, XRP)│
-│    • Мгновенная регистрация импульса цены              │
-└───────────────────────────┬────────────────────────────┘
-                            │ Референсная цена P_ref
-                            ▼
-┌────────────────────────────────────────────────────────┐
-│ 2. СТРАТЕГИЧЕСКИЙ ДВИЖОК (Strike Sniper Logic)         │
-│    • Polymarket Gamma API: Strike Price (K)            │
-│    • Сравнение: P_ref vs K                             │
-│    • Если P_ref > K + Spread_safe → Вероятность YES ↑ │
-│    • Расчет размера позиции (Share Sizing)             │
-└───────────────────────────┬────────────────────────────┘
-                            │ Taker Order Intent
-                            ▼
-┌────────────────────────────────────────────────────────┐
-│ 3. ИСПОЛНЕНИЕ (Polymarket CLOB API)                    │
-│    • Central Limit Order Book                          │
-│    • Лимитные / Taker заявки на исход YES / NO         │
-│    • Event Logger + Circuit Breaker (Daily Stop-Loss)  │
-└────────────────────────────────────────────────────────┘
+```mermaid
+flowchart TD
+    subgraph S1 ["⚡ 1. Быстрый источник (Hyperliquid L2 WebSocket)"]
+        direction TB
+        H1["Real-time спот/перп котировки (BTC, ETH, SOL)"]
+        H2["Мгновенная регистрация импульса цены"]
+        H1 --> H2
+    end
+
+    S1 ==>|Референсная цена P_ref| S2
+
+    subgraph S2 ["🎯 2. Стратегический движок (Strike Sniper Logic)"]
+        direction TB
+        G1["Polymarket Gamma API: Strike Price (K)"]
+        G2{"Сравнение: P_ref > K + Spread_safe?"}
+        G3["Расчет размера позиции (Share Sizing)"]
+        G1 --> G2
+        G2 -->|Да (Вероятность YES ↑)| G3
+    end
+
+    S2 ==>|Taker Order Intent (EIP-712)| S3
+
+    subgraph S3 ["🛡️ 3. Исполнение (Polymarket CLOB API)"]
+        direction TB
+        C1["Central Limit Order Book (L2 стакан)"]
+        C2["Лимитные / Taker заявки на YES / NO"]
+        C3["Event Logger + Circuit Breaker (Daily Stop-Loss)"]
+        C1 --> C2 --> C3
+    end
 ```
 
 ---
