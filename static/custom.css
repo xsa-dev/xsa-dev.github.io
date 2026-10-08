@@ -1,6 +1,70 @@
 /* ==========================================================================
-   Modern Clean Link & Typography Styling for Notes & Insights
+   Modern Clean Link & Responsive Typography Styling for Notes & Insights
    ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Responsive, Balanced Headings (No Oversized Titles, No Horizontal Overflow)
+   -------------------------------------------------------------------------- */
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+/* Main Post Title (H1) */
+h1,
+article #heading h1,
+main > h1 {
+  font-size: clamp(1.6rem, 2.8vw + 0.6rem, 2.2rem);
+  line-height: 1.25;
+  margin: 0.85rem 0 1rem 0;
+}
+
+/* Section Headings (H2) */
+h2,
+article h2 {
+  font-size: clamp(1.3rem, 2.2vw + 0.4rem, 1.6rem);
+  line-height: 1.3;
+  margin: 2.25rem 0 0.85rem 0;
+}
+
+/* Sub-sections (H3) */
+h3,
+article h3 {
+  font-size: clamp(1.1rem, 1.6vw + 0.35rem, 1.3rem);
+  line-height: 1.35;
+  margin: 1.75rem 0 0.65rem 0;
+}
+
+/* Mobile Headings Optimization */
+@media (max-width: 640px) {
+  h1,
+  article #heading h1,
+  main > h1 {
+    font-size: 1.55rem !important;
+    line-height: 1.28 !important;
+    margin: 0.5rem 0 0.75rem 0 !important;
+  }
+
+  h2,
+  article h2 {
+    font-size: 1.3rem !important;
+    line-height: 1.3 !important;
+    margin: 1.75rem 0 0.65rem 0 !important;
+  }
+
+  h3,
+  article h3 {
+    font-size: 1.15rem !important;
+    line-height: 1.35 !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   2. Modern Clean Links
+   -------------------------------------------------------------------------- */
 
 /* Base links: remove clunky dotted/wavy default decorations */
 a {
