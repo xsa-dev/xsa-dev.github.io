@@ -40,6 +40,7 @@ show_share_button = true
 show_backlinks = false
 show_copyright = true
 show_powered_by = false
+katex = true
 
 toc = true
 toc_sidebar = true
