@@ -748,7 +748,7 @@ body.nav-drawer-locked {
 /* --------------------------------------------------------------------------
    8. Clean Search Modal Overlay (Theme-Adaptive)
    -------------------------------------------------------------------------- */
-.site-search-modal {
+#search-container.site-search-modal {
   position: fixed !important;
   inset: 0 !important;
   z-index: 10005 !important;
@@ -759,10 +759,13 @@ body.nav-drawer-locked {
   opacity: 0 !important;
   visibility: hidden !important;
   pointer-events: none !important;
+  transform: none !important;
+  height: 100vh !important;
+  width: 100vw !important;
   transition: opacity 0.2s ease, visibility 0.2s ease !important;
 }
 
-.site-search-modal.active {
+#search-container.site-search-modal.active {
   opacity: 1 !important;
   visibility: visible !important;
   pointer-events: auto !important;

@@ -1,5 +1,5 @@
 /**
- * Modern Responsive Hybrid Navigation Drawer & Search Controller
+ * Modern Responsive Hybrid Navigation Drawer & Search Integration Controller
  * Notes & Insights (https://xsa-dev.github.io)
  */
 document.addEventListener('DOMContentLoaded', () => {
@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const searchToggle = document.getElementById('search-toggle');
   const searchCardTrigger = document.getElementById('drawer-search-card');
   const searchCloseBtn = document.getElementById('search-close-btn');
-  const searchBackdrop = document.getElementById('search-backdrop');
+  const searchBackdrop = document.getElementById('search-modal-backdrop');
   const searchContainer = document.getElementById('search-container');
   const searchBar = document.getElementById('search-bar');
 
@@ -54,48 +54,36 @@ document.addEventListener('DOMContentLoaded', () => {
   if (drawerClose) drawerClose.addEventListener('click', closeDrawer);
   if (drawerBackdrop) drawerBackdrop.addEventListener('click', closeDrawer);
 
-  // --- 2. Search Modal Logic ---
-  function openSearch() {
-    closeDrawer(); // Close drawer if open
-    if (!searchContainer) return;
-    searchContainer.classList.add('active');
-    searchContainer.setAttribute('aria-hidden', 'false');
-    if (searchToggle) searchToggle.setAttribute('aria-expanded', 'true');
-    
-    // Ensure search bar is enabled and focused
-    if (searchBar) {
-      searchBar.disabled = false;
-      setTimeout(() => searchBar.focus(), 80);
+  // --- 2. Search Integration with search-fuse.js ---
+  function triggerSearch() {
+    closeDrawer();
+    if (searchToggle) {
+      searchToggle.click();
     }
-  }
-
-  function closeSearch() {
-    if (!searchContainer) return;
-    searchContainer.classList.remove('active');
-    searchContainer.setAttribute('aria-hidden', 'true');
-    if (searchToggle) searchToggle.setAttribute('aria-expanded', 'false');
-  }
-
-  if (searchToggle) {
-    searchToggle.addEventListener('click', (e) => {
-      e.stopPropagation();
-      if (searchContainer.classList.contains('active')) {
-        closeSearch();
-      } else {
-        openSearch();
-      }
-    });
   }
 
   if (searchCardTrigger) {
     searchCardTrigger.addEventListener('click', (e) => {
       e.stopPropagation();
-      openSearch();
+      triggerSearch();
     });
   }
 
-  if (searchCloseBtn) searchCloseBtn.addEventListener('click', closeSearch);
-  if (searchBackdrop) searchBackdrop.addEventListener('click', closeSearch);
+  if (searchCloseBtn) {
+    searchCloseBtn.addEventListener('click', () => {
+      if (searchContainer && searchContainer.classList.contains('active')) {
+        triggerSearch();
+      }
+    });
+  }
+
+  if (searchBackdrop) {
+    searchBackdrop.addEventListener('click', () => {
+      if (searchContainer && searchContainer.classList.contains('active')) {
+        triggerSearch();
+      }
+    });
+  }
 
   // --- 3. Quick Theme Toggle Logic ---
   function toggleTheme() {
@@ -123,17 +111,13 @@ document.addEventListener('DOMContentLoaded', () => {
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
       if (searchContainer && searchContainer.classList.contains('active')) {
-        closeSearch();
+        triggerSearch();
       } else if (drawer && drawer.classList.contains('open')) {
         closeDrawer();
       }
     } else if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
       e.preventDefault();
-      if (searchContainer && searchContainer.classList.contains('active')) {
-        closeSearch();
-      } else {
-        openSearch();
-      }
+      triggerSearch();
     }
   });
 });
