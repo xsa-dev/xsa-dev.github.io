@@ -2,13 +2,7 @@
  * Native Mermaid.js Diagram Auto-Renderer for Notes & Insights (Zola)
  * Finds ```mermaid code blocks and turns them into interactive vector SVG diagrams.
  */
-(async () => {
-  function decodeHtml(html) {
-    const txt = document.createElement('textarea');
-    txt.innerHTML = html;
-    return txt.value;
-  }
-
+async function initMermaid() {
   const mermaidCodes = document.querySelectorAll('code[data-lang="mermaid"]');
   if (!mermaidCodes.length) return;
 
@@ -23,7 +17,7 @@
       themeVariables: isDark ? {
         darkMode: true,
         background: '#090d16',
-        mainBkg: '#111827',
+        mainBkg: '#1e293b',
         primaryColor: '#1e293b',
         primaryTextColor: '#f8fafc',
         primaryBorderColor: '#38bdf8',
@@ -42,9 +36,9 @@
     for (let i = 0; i < mermaidCodes.length; i++) {
       const codeEl = mermaidCodes[i];
       const pre = codeEl.closest('pre') || codeEl;
-      const rawText = decodeHtml(codeEl.innerText.trim());
+      const rawText = codeEl.innerText.trim();
       
-      const id = 'mermaid-diagram-' + i;
+      const id = 'mermaid-diagram-' + Math.floor(Math.random() * 1000000);
       try {
         const { svg } = await mermaid.render(id, rawText);
         const container = document.createElement('div');
@@ -59,4 +53,10 @@
   } catch (err) {
     console.error('Failed to initialize Mermaid:', err);
   }
-})();
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initMermaid);
+} else {
+  initMermaid();
+}
