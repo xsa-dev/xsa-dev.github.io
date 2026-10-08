@@ -3,14 +3,18 @@
  * Finds ```mermaid code blocks and turns them into interactive vector SVG diagrams.
  */
 (async () => {
-  const mermaidBlocks = document.querySelectorAll('pre[data-lang="mermaid"], pre code.language-mermaid, pre.giallo[data-lang="mermaid"]');
-  if (!mermaidBlocks.length) return;
+  function decodeHtml(html) {
+    const txt = document.createElement('textarea');
+    txt.innerHTML = html;
+    return txt.value;
+  }
 
-  // Dynamically load Mermaid ESM
+  const mermaidCodes = document.querySelectorAll('code[data-lang="mermaid"]');
+  if (!mermaidCodes.length) return;
+
   try {
     const { default: mermaid } = await import('https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs');
     
-    // Check current theme
     const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
 
     mermaid.initialize({
@@ -18,8 +22,8 @@
       theme: isDark ? 'dark' : 'default',
       themeVariables: isDark ? {
         darkMode: true,
-        background: '#0e1726',
-        mainBkg: '#1e293b',
+        background: '#090d16',
+        mainBkg: '#111827',
         primaryColor: '#1e293b',
         primaryTextColor: '#f8fafc',
         primaryBorderColor: '#38bdf8',
@@ -35,24 +39,23 @@
       securityLevel: 'loose'
     });
 
-    // Replace code blocks with mermaid divs
-    mermaidBlocks.forEach((block, idx) => {
-      let code = block.textContent.trim();
-      let parent = block.closest('pre') || block;
+    for (let i = 0; i < mermaidCodes.length; i++) {
+      const codeEl = mermaidCodes[i];
+      const pre = codeEl.closest('pre') || codeEl;
+      const rawText = decodeHtml(codeEl.innerText.trim());
       
-      const container = document.createElement('div');
-      container.className = 'mermaid-container';
-      container.style.cssText = 'display:flex;justify-content:center;margin:1.75rem 0;overflow-x:auto;padding:1rem;background:rgba(15,23,42,0.6);border-radius:12px;border:1px solid rgba(255,255,255,0.08);';
-      
-      const mermaidDiv = document.createElement('div');
-      mermaidDiv.className = 'mermaid';
-      mermaidDiv.textContent = code;
-      
-      container.appendChild(mermaidDiv);
-      parent.parentNode.replaceChild(container, parent);
-    });
-
-    await mermaid.run();
+      const id = 'mermaid-diagram-' + i;
+      try {
+        const { svg } = await mermaid.render(id, rawText);
+        const container = document.createElement('div');
+        container.className = 'mermaid-container';
+        container.style.cssText = 'display:flex;justify-content:center;margin:2rem 0;overflow-x:auto;padding:1.5rem;background:rgba(15,23,42,0.7);border-radius:14px;border:1px solid rgba(56,189,248,0.25);box-shadow:0 10px 30px rgba(0,0,0,0.3);';
+        container.innerHTML = svg;
+        pre.parentNode.replaceChild(container, pre);
+      } catch (renderErr) {
+        console.error('Mermaid render error for block ' + i, renderErr);
+      }
+    }
   } catch (err) {
     console.error('Failed to initialize Mermaid:', err);
   }
