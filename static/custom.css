@@ -374,3 +374,164 @@ img.zoomable-img:hover {
 body.zoom-lock-scroll {
   overflow: hidden !important;
 }
+
+
+/* --------------------------------------------------------------------------
+   6. Expandable Interactive Icon Dock Navigation
+   -------------------------------------------------------------------------- */
+.dock-nav-wrapper {
+  position: sticky;
+  top: 0.5rem;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 0.5rem 1rem;
+  pointer-events: none;
+}
+
+.dock-nav {
+  pointer-events: auto;
+  background: rgba(15, 23, 42, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 9999px;
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.5), 0 0 20px rgba(56, 189, 248, 0.08);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  max-width: 96vw;
+}
+
+.dock-nav:hover,
+.dock-nav.dock-expanded {
+  border-color: rgba(56, 189, 248, 0.35);
+  box-shadow: 0 12px 35px -5px rgba(0, 0, 0, 0.6), 0 0 25px rgba(56, 189, 248, 0.18);
+}
+
+.dock-list {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0.35rem 0.5rem;
+  gap: 0.25rem;
+}
+
+.dock-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.dock-link,
+.dock-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  padding: 0.45rem 0.6rem;
+  border-radius: 9999px;
+  text-decoration: none;
+  color: #94a3b8;
+  font-size: 13.5px;
+  font-weight: 500;
+  font-family: Inter, -apple-system, sans-serif;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 0.22s ease;
+  line-height: 1;
+}
+
+.dock-link:hover,
+.dock-btn:hover {
+  color: #f8fafc;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.dock-link.active {
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.14);
+  font-weight: 600;
+}
+
+.dock-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  stroke: currentColor;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.dock-link:hover .dock-icon,
+.dock-btn:hover .dock-icon {
+  transform: scale(1.1);
+}
+
+.dock-label {
+  max-width: 0;
+  opacity: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  transform: translateX(-4px);
+  transition: max-width 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease, transform 0.2s ease, margin 0.2s ease;
+  margin-left: 0;
+}
+
+/* Show labels when expanded or hovered */
+.dock-nav.dock-expanded .dock-label,
+.dock-item:hover .dock-label {
+  max-width: 100px;
+  opacity: 1;
+  transform: translateX(0);
+  margin-left: 0.45rem;
+}
+
+.dock-toggle-btn {
+  background: rgba(56, 189, 248, 0.12);
+  color: #38bdf8;
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  font-weight: 600;
+}
+
+.dock-toggle-btn:hover {
+  background: rgba(56, 189, 248, 0.22);
+  color: #ffffff;
+}
+
+.dock-divider {
+  width: 1px;
+  height: 18px;
+  background: rgba(255, 255, 255, 0.12);
+  margin: 0 0.2rem;
+}
+
+.dock-submenu {
+  position: absolute;
+  top: calc(100% + 0.6rem);
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(15, 23, 42, 0.95);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  padding: 0.4rem;
+  display: flex;
+  gap: 0.3rem;
+  list-style: none;
+  z-index: 1001;
+}
+
+@media (max-width: 640px) {
+  .dock-nav-wrapper {
+    top: 0.25rem;
+    padding: 0.25rem;
+  }
+  .dock-link, .dock-btn {
+    padding: 0.4rem 0.5rem;
+  }
+  .dock-icon {
+    width: 16px;
+    height: 16px;
+  }
+}
