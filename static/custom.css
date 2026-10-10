@@ -1,3 +1,63 @@
+/* Frequency-weighted tag cloud: build-time data, no JavaScript. */
+.tag-cloud-panel {
+  padding: clamp(1rem, 3vw, 2.5rem);
+  border: 1px solid var(--fg-muted-2);
+  border-radius: 1.5rem;
+  background: linear-gradient(135deg, var(--accent-color-alpha), var(--bg-color) 65%);
+}
+main .tag-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: .85rem .7rem;
+  list-style: none;
+  padding: 1rem 0;
+  margin: 0;
+}
+.tag-cloud li { margin: 0; padding: 0; max-width: 100%; }
+.tag-cloud li::before { content: none; }
+main .tag-cloud .tag-cloud-link {
+  display: flex;
+  align-items: center;
+  gap: .55em;
+  min-height: 44px;
+  box-sizing: border-box;
+  padding: .45em .75em;
+  border-radius: 999px;
+  border: 1px solid var(--fg-muted-2);
+  border-color: color-mix(in srgb, var(--accent-color) var(--edge), var(--fg-muted-2));
+  background: var(--accent-color-alpha);
+  background: linear-gradient(135deg, color-mix(in srgb, var(--accent-color) var(--tint), var(--bg-color)), var(--bg-color));
+  color: var(--fg-color);
+  font-size: calc(.9rem + var(--weight) * .8rem);
+  font-weight: calc(450 + var(--weight) * 250);
+  line-height: 1.4;
+  text-decoration: none !important;
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+.tag-cloud-name { min-width: 0; overflow-wrap: anywhere; }
+.tag-cloud-count {
+  font-size: .65em;
+  font-weight: 600;
+  border-radius: 999px;
+  padding: .15em .5em;
+  background: var(--fg-muted-2);
+  font-variant-numeric: tabular-nums;
+}
+main .tag-cloud .tag-cloud-link:hover { transform: translateY(-3px); box-shadow: 0 5px 18px var(--accent-color-alpha); }
+.tag-cloud-link:focus-visible { outline: 2px solid var(--accent-color); outline-offset: 4px; }
+.tag-cloud-legend { display: flex; align-items: center; justify-content: center; gap: .6rem; margin-top: 1.5rem; font-size: .75rem; color: var(--fg-color); flex-wrap: wrap; }
+.tag-cloud-scale { width: 5rem; height: .4rem; border-radius: 1rem; background: linear-gradient(90deg, var(--accent-color-alpha), var(--accent-color)); }
+@media (max-width: 480px) {
+  main .tag-cloud .tag-cloud-link { font-size: calc(.82rem + var(--weight) * .55rem); }
+  main .tag-cloud { gap: .6rem .4rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  main .tag-cloud .tag-cloud-link { transition: none; }
+  main .tag-cloud .tag-cloud-link:hover { transform: none; }
+}
+
 /* ==========================================================================
    Modern Clean Link, Typography & Mobile Viewport Styling for Notes & Insights
    ========================================================================== */

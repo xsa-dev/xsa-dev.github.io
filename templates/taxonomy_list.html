@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+  {% set number_of_terms = terms | length %}
+  {% set taxon_name = taxonomy.name %}
+  <h1>{{ <translate key={taxon_name ~ "_title"} default={taxonomy.name | capitalize} language_strings /> }}</h1>
+  <p><small>{{ <translate key={taxonomy.name} number={number_of_terms} default={"$NUMBER " ~ taxonomy.name} language_strings /> }}</small></p>
+  {% set_global max_count = 1 %}
+  {% set_global min_count = 999999 %}
+  {% for term in terms %}
+    {% set count = term.pages | length %}
+    {% if count > max_count %}{% set_global max_count = count %}{% endif %}
+    {% if count < min_count %}{% set_global min_count = count %}{% endif %}
+  {% endfor %}
+  <div class="tag-cloud-panel">
+    <ul class="tag-cloud" aria-label="Теги по количеству публикаций">
+      {% for term in terms %}
+        {% set count = term.pages | length %}
+        {% set weight = 0.5 %}
+        {% if max_count > min_count %}
+          {% set weight = (count - min_count) / (max_count - min_count) %}
+        {% endif %}
+        <li style="--weight: {{ weight }}; --tint: {{ 8 + weight * 30 }}%; --edge: {{ 18 + weight * 42 }}%">
+          <a href="{{ term.permalink }}" class="tag-cloud-link">
+            <span class="tag-cloud-name">{{ term.name }}</span>
+            <span class="tag-cloud-count">{{ count }}</span>
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+    {% if number_of_terms > 0 %}
+      <div class="tag-cloud-legend" aria-hidden="true"><span>{{ min_count }}</span><span class="tag-cloud-scale"></span><span>{{ max_count }}</span><span>публикаций на тег</span></div>
+    {% endif %}
+  </div>
+  {% block details %}{% endblock details %}
+{% endblock content %}
