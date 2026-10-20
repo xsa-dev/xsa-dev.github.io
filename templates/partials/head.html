@@ -62,7 +62,7 @@
 		{%- if config.markdown?.highlighting and config.markdown.highlighting.light_theme and config.markdown.highlighting.dark_theme %}
 			<link type="text/css" rel="stylesheet" href="{{ get_url(path='giallo-light.css') }}" media="(prefers-color-scheme: light)" />
 			<link type="text/css" rel="stylesheet" href="{{ get_url(path='giallo-dark.css') }}" media="(prefers-color-scheme: dark)" />
-		{%- elif config.markdown?.highlighting and config.markdown.highlighting.theme %}
+		{%- elif config.markdown?.highlighting and config.markdown.highlighting.theme and config.markdown.highlighting.style != "inline" %}
 			<link type="text/css" rel="stylesheet" href="{{ get_url(path='giallo.css') }}" />
 		{%- endif %}
 	{%- endif %}

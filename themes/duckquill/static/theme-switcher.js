@@ -60,6 +60,7 @@ function switchTheme(theme) {
 
 function updateIconClass(theme) {
 	const iconElement = document.querySelector("#theme-switcher summary .icon");
+	if (!iconElement) return;
 
 	// Remove any existing theme classes
 	iconElement.classList.remove("light", "dark");
@@ -85,14 +86,13 @@ function updateActiveButton(theme) {
 	}
 }
 
-document.getElementById("theme-light").addEventListener("click", function () {
-	switchTheme("light");
-});
-document.getElementById("theme-dark").addEventListener("click", function () {
-	switchTheme("dark");
-});
-document.getElementById("theme-system").addEventListener("click", function () {
-	switchTheme("system");
+["theme-light", "theme-dark", "theme-system"].forEach((id) => {
+	const button = document.getElementById(id);
+	if (button) {
+		button.addEventListener("click", function () {
+			switchTheme(id.replace("theme-", ""));
+		});
+	}
 });
 
 // Update icon class on page load based on current theme
