@@ -1,6 +1,14 @@
 # Zola build directory
 public/
 
+# Drafts and reports
+drafts/
+reports/
+
+# Python
+__pycache__/
+*.pyc
+
 # OS / Editor files
 .DS_Store
 *.swp
